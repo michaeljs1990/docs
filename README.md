@@ -9,6 +9,7 @@ Index
 2. [Linux (General)](src/Linux.md)
 3. [Operating Systems](src/OS.md)
 4. [Ruby](src/Ruby.md)
+5. [Dependencies](src/Dependencies.md)
 
 In Progress
 ===========
