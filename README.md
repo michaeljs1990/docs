@@ -10,6 +10,7 @@ Index
 3. [Operating Systems](src/OS.md)
 4. [Ruby](src/Ruby.md)
 5. [Dependencies](src/Dependencies.md)
+6. [Philosophy](src/Philosophy.md)
 
 In Progress
 ===========
