@@ -1,7 +1,7 @@
 djbdns (How to setup your own DNS)
 ======
 
-The following will give you a good background on how dns works. At the most basic level setting up your own DNS requries two different programs. a DNS cache and a DNS server. The cache will handle lookups and will delegate to your internal DNS server when needed. For all other queries it will use of the root DNS servers.
+The following will give you a good background on how dns works. At the most basic level setting up your own DNS requries two different programs. a DNS cache and a DNS server. The cache will handle lookups and will delegate to your internal DNS server when needed. For all other queries it will use one of the root DNS servers https://en.wikipedia.org/wiki/Root_name_server.
 
 * http://cr.yp.to/djbdns/intro-dns.html
 
