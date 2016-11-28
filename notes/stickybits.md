@@ -1,3 +1,5 @@
+Inspired by https://twitter.com/b0rk/status/801233053699940352
+
 # SUID/GUID Quirks
 
 This will cover some of the quirks of linux file permissions that I often forget.
