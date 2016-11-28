@@ -1,6 +1,3 @@
-SUID, GUID, Sticky Bits
-===========
-
 # SUID/GUID Quirks
 
 This will cover some of the quirks of linux file permissions that I often forget.
