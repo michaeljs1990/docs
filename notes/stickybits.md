@@ -57,7 +57,7 @@ total 0
 The following will make the file executable and then you can test running the file as another user.
 
 ```
-$ chmod +x file.sh
+$ chmod +x binary
 $ ls -la
 $ ls -la
 total 0
