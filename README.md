@@ -12,6 +12,7 @@ Index
 5. [Ruby](src/Ruby.md)
 6. [Dependencies](src/Dependencies.md)
 7. [Philosophy](src/Philosophy.md)
+7. [Cisco](src/Cisco.md)
 
 In Progress
 ===========
