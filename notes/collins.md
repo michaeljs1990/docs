@@ -1,6 +1,9 @@
 [Collins](http://tumblr.github.io/collins/)
 =======
 
+Collins was designed from the beginning to represent assets in the simplest way possible. This simplicity makes for 
+an efficient data-model and allows for a large degree of flexibility.
+
 # Creating a node classifier
 
 Although not obvious collins has a classification system built in that is easy to use and flexible. You can do so by
