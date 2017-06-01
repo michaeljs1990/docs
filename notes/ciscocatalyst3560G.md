@@ -90,3 +90,18 @@ can run the following two commands.
 show ip ssh
 show ssh
 ```
+
+# List interfaces
+
+Now much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
+instead of whatever the true interface speed is.
+
+```
+show interfaces status
+```
+
+If you want to filter for connected only interfaces on devices with a large number of ports..
+
+```
+show interfaces status | include connected
+```
