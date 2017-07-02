@@ -158,3 +158,7 @@ the new VLAN as well.
 
 To test you can use the cisco ping command `ping 192.168.1.1 source 10.0.0.1` to ensure that your
 routing is setup properly.
+
+Note you will still have to setup a static route so that in this case the router handling
+`192.168.1.1` which in my case is a static route 10.0.0.1 -> 192.168.1.8 where 192.168.1.8
+is the ip for VLAN 1 on my switch.
