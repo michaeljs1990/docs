@@ -93,7 +93,7 @@ show ssh
 
 # List interfaces
 
-Now much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
+Not much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
 instead of whatever the true interface speed is.
 
 ```
@@ -105,3 +105,56 @@ If you want to filter for connected only interfaces on devices with a large numb
 ```
 show interfaces status | include connected
 ```
+
+# VLANs
+
+General overview of working with VLAN for noobs like me.
+
+To get an overview of the current/default VLANs on your switch and the ports connected to them run 
+
+```
+show vlan
+```
+
+To create a new VLAN run the following commands on your switch. VLAN 2 is used in this example
+but you can use any VLAN that you wish. Some things to note is that `no shutdown` is used to
+bring the interface up since by default it is set to down. The default-gateway is not needed 
+however I explicitly state it here in case you want to use a different gateway for the specific
+VLAN than the one used for all interfaces on the router.
+
+```
+enable
+configure terminal
+
+vlan 2
+name ToR
+exit
+
+interface Vlan 2
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
+
+copy running-config startup-config
+```
+
+The above will create the VLAN interface which you can now start assigning to ports. You can use
+the show interfaces status to get a list of ports that are currently active.
+
+```
+enable
+configure terminal
+
+interface GigabitEthernet 0/33
+switchport access vlan 2
+exit
+
+copy running-config startup-config
+```
+
+If you did everything correct the Vlan you configured should say `Vlan2 is up, line protocol is up`
+when you check the output of `show interfaces`. `show interfaces brief` should list all ports using
+the new VLAN as well.
+
+To test you can use the cisco ping command `ping 192.168.1.1 source 10.0.0.1` to ensure that your
+routing is setup properly.

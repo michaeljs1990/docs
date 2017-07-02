@@ -10,6 +10,7 @@ IPMI
 ====
 
 1. https://www.thomas-krenn.com/en/wiki/Configuring_IPMI_under_Linux_using_ipmitool
+2. http://www.openfusion.net/linux/ipmi_on_centos
 
 Networking
 ==========
