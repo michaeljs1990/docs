@@ -162,3 +162,18 @@ routing is setup properly.
 Note you will still have to setup a static route so that in this case the router handling
 `192.168.1.1` which in my case is a static route 10.0.0.1 -> 192.168.1.8 where 192.168.1.8
 is the ip for VLAN 1 on my switch.
+
+# DHCP Forwarding 
+
+If you have a DHCP server on another broadcast domain you can set the DHCP server the ToR switch
+should forward to using the following. In this example 192.168.1.5 is my DHCP server.
+```
+enable
+configure terminal
+
+interface Vlan 2
+ip helper-address 192.168.1.5
+exit
+
+copy running-config startup-config
+```
