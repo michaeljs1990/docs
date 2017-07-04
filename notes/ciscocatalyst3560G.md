@@ -177,3 +177,18 @@ exit
 
 copy running-config startup-config
 ```
+
+# Random
+
+To stop Cisco from trying to do a dns lookup when you type in an invalid command
+you can issue the following.
+
+```
+no ip domain lookup
+```
+
+If you would like to not be blasted with logging while you are typing..
+
+```
+no logging console
+```
