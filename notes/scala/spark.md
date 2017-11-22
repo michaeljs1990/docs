@@ -136,6 +136,43 @@ rdd.countByKey()
 
 ## RDDs and Joins
 
+Here is an example of the `join` function in spark which is actually an inner join.
+
+```
+val rdd1 = sc.parallelize(List((1, "Mike"), (2, "Abby"), (1, "Jeff"), (4, "Harry"), (5, "Potter")))
+val rdd2 = sc.parallelize(List((1, ("A", "B")), (5, ("B", "B")), (6, ("C", "B")), (1, ("Z", "T"))))
+
+rdd1.join(rdd2).collect()
+# res19: Array[(Int, (String, (String, String)))] = Array((1,(Mike,(A,B))), (1,(Mike,(Z,T))), (1,(Jeff,(A,B))), (1,(Jeff,(Z,T))), (5,(Potter,(B,B))))
+```
+
+The important thing to note is that the keys with 4 and 6 in them are no longer in the list. This is because
+it had nothing in common with the other list so it was dropped.
+
+Outer joins allow you to pick what data is most important to you see the following example.
+
+```
+val rdd1 = sc.parallelize(List((1, "Mike"), (2, "Abby"), (1, "Jeff"), (4, "Harry"), (5, "Potter")))
+val rdd2 = sc.parallelize(List((1, ("A", "B")), (5, ("B", "B")), (6, ("C", "B")), (1, ("Z", "T"))))
+
+rdd1.leftOuterJoin(rdd2).collect()
+# res1: Array[(Int, (String, Option[(String, String)]))] = Array((4,(Harry,None)), (1,(Mike,Some((A,B)))), (1,(Mike,Some((Z,T)))), (1,(Jeff,Some((A,B)))), (1,(Jeff,Some((Z,T)))), (5,(Potter,Some((B,B)))), (2,(Abby,None)))
+```
+
+With left outter join we have told it that we care most about the data on "left" or rdd1 in this case.
+As you can see the key of 4 has been included in the computed list with an extra value of None added 
+since it had nothing to join with.
+
+```
+val rdd1 = sc.parallelize(List((1, "Mike"), (2, "Abby"), (1, "Jeff"), (4, "Harry"), (5, "Potter")))
+val rdd2 = sc.parallelize(List((1, ("A", "B")), (5, ("B", "B")), (6, ("C", "B")), (1, ("Z", "T"))))
+
+rdd1.leftOuterJoin(rdd2).collect()
+# res2: Array[(Int, (Option[String], (String, String)))] = Array((1,(Some(Mike),(A,B))), (1,(Some(Mike),(Z,T))), (1,(Some(Jeff),(A,B))), (1,(Some(Jeff),(Z,T))), (6,(None,(C,B))), (5,(Some(Potter),(B,B))))
+```
+
+This is doing the same as left join except we have decided that rdd2 is the data we care about so
+the key of 6 has been included in the output and 4 has been dropped.
 
 
 ## Caching
