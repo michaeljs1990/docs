@@ -56,6 +56,9 @@ type. This goes from `Tuple1` to `Tuple22`. You can read more about this here.
 
 https://underscore.io/blog/posts/2016/10/11/twenty-two.html
 
+Note that you can also use `sample` or `takeSample` to return a sub-section of the RDD when you
+are trying to write some code that utilizes it.
+
 ## Pair RDDs
 
 Pair RDDs are very similar to normal RDDs except they offer a few additional functions
@@ -174,6 +177,15 @@ rdd1.leftOuterJoin(rdd2).collect()
 This is doing the same as left join except we have decided that rdd2 is the data we care about so
 the key of 6 has been included in the output and 4 has been dropped.
 
+## Shuffling
+
+Shuffling is important to consider when performing operations on RDDs. Take for example the case that you
+have 10 nodes and an RDD in the form of `(Key, Value)` that has been partitioned across the cluster. If you
+wanted to `groupByKey` each node in the cluster has to talk to each and every other node in the cluster to
+find out what Values belong to what Key. This is a lot of network traffic if you have large sets of data. If
+you instead reducedByKey it will reduce locally before talking over the network so instead of every `(Key, Value)`
+pair needing to make a network call you are only doing it once per node in the form of `(Key, (Values))` after
+your reduce has finished.
 
 ## Caching
 
