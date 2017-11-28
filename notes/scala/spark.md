@@ -187,6 +187,59 @@ you instead reducedByKey it will reduce locally before talking over the network 
 pair needing to make a network call you are only doing it once per node in the form of `(Key, (Values))` after
 your reduce has finished.
 
+The following functions might cause shuffles.
+
+```
+cogroup
+groupWith
+join
+leftOuterJoin
+rightOuterJoin
+groupByKey
+reduceByKey
+combineByKey
+distinct
+intersection
+repartition
+coalesce
+```
+
+## Partitioning
+
+You can partition your data in a few different ways in Spark depending on what makes sense. The most
+common are range partitioning and hash partitioning.
+
+Here is an example of range partitioning.
+
+```
+import org.apache.spark.RangePartitioner
+
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(
+  ("I", "India"),
+  ("U", "USA"),
+  ("W", "West")))
+
+val rp = new RangePartitioner(3, rdd)
+val parts = rdd.partitionBy(rp).cache()
+
+// This will let you peek inside each partition to see what is going on
+// try changing the partition size and see what happens
+parts.mapPartitionsWithIndex( (x,y) => { println(x); y.foreach(println); y } ).collect()
+```
+
+The following is how you would use a Hash partitioner that has 3 partitions.
+
+```
+import org.apache.spark.HashPartitioner
+
+val rp = new HashPartitioner(3)
+val parts = rdd.partitionBy(rp).cache()
+```
+
+When you have a partitioned set of data you can perform most operations except `map` or `flatMap`.
+This is because you can alter the keys of the partition when running these which is extreamly
+expensive.
+
 ## Caching
 
 By default an RDD is recomputed everytime you run an action on it. If your RDD is not going to change
@@ -222,3 +275,12 @@ cached the rdd is only loaded once.
 
 Read more about it here https://stackoverflow.com/questions/28981359/why-do-we-need-to-call-cache-or-persist-on-a-rdd 
 
+## Debug Workflow
+
+After reading all of the above you are likely now concerned that you have written some super shitty 
+scala code that is constantly shuffling data. The bad news is you 100% did but the good news is that
+you have a few functions to debug it.
+
+On any RDD you can call the function `dependencies` which will output a high level list of operations
+that are about to be performed. You can all use `toDebugString` which will give you a little more
+insight into what is happening.
