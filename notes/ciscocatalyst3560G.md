@@ -192,3 +192,13 @@ If you would like to not be blasted with logging while you are typing..
 ```
 no logging console
 ```
+
+# Get System Temp Info
+
+If you are looking for info on if your system is overheating you can use
+
+```
+show env all
+```
+
+To return information about the temp, system fan, and temp thresholds.
