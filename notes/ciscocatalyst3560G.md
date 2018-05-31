@@ -134,14 +134,6 @@ interface Vlan 2
 ip address 10.0.0.1 255.255.255.0
 no shutdown
 exit
-
-copy running-config startup-config
-```
-
-The above will create the VLAN interface which you can now start assigning to ports. You can use
-the show interfaces status to get a list of ports that are currently active.
-
-```
 enable
 configure terminal
 
@@ -162,6 +154,25 @@ routing is setup properly.
 Note you will still have to setup a static route so that in this case the router handling
 `192.168.1.1` which in my case is a static route 10.0.0.1 -> 192.168.1.8 where 192.168.1.8
 is the ip for VLAN 1 on my switch.
+
+# Configure DHCP 
+
+Very similiar to the steps for settingup up vlans for the most part you can configure your switch
+port to use DHCP to get it's IP address.
+
+```
+enable
+configure terminal
+
+interface GigabitEthernet 0/1
+ip address dhcp
+exit
+
+copy running-config startup-config
+```
+
+This will allow you to let an upstream router acting as the DHCP set your IP instead of having to change it by hand
+when you need to make changes to your router.
 
 # DHCP Forwarding 
 
