@@ -1,0 +1,249 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Cisco Catalyst 3560G Config &#8212; Bookmarks rc documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="cisco-catalyst-3560g-config">
+<h1>Cisco Catalyst 3560G Config<a class="headerlink" href="#cisco-catalyst-3560g-config" title="Permalink to this headline">¶</a></h1>
+<p>This document covers a range of different configurations needed and some not needed for getting my switch working.
+Most of this is likely wrong or has a better way of doing it i’m still learning. I will try and come back and clean
+this up later so I don’t leave crap info sitting around forever.</p>
+<p># Set Cisco Banner (motd)</p>
+<p>This will set the banner that is shown when first loggin into your switch.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">enable</span>
+<span class="pre">configure</span> <span class="pre">terminal</span>
+<span class="pre">banner</span> <span class="pre">motd</span> <span class="pre">[</span>
+<span class="pre">end</span>
+<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
+<span class="pre">`</span></code></p>
+<p>You can now type in whatever you want and when you are finished type <cite>[</cite> and press enter.</p>
+<p># Enable LLDP</p>
+<p>Enable connected deviced to retrieve attributes about the network. More about LLDP can be seen in the first paragraph
+of this [link](<a class="reference external" href="http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html">http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html</a>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">enable</span>
+<span class="pre">configure</span> <span class="pre">terminal</span>
+<span class="pre">lldp</span> <span class="pre">run</span>
+<span class="pre">end</span>
+<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
+<span class="pre">`</span></code></p>
+<p># Set Hostname &amp; DNS</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">enable</span>
+<span class="pre">configure</span> <span class="pre">terminal</span>
+<span class="pre">hostname</span> <span class="pre">&lt;hostname&gt;</span>
+<span class="pre">ip</span> <span class="pre">domain-name</span> <span class="pre">&lt;domain-root&gt;</span>
+<span class="pre">ip</span> <span class="pre">name-server</span> <span class="pre">&lt;ip&gt;</span>
+<span class="pre">end</span>
+<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
+<span class="pre">`</span></code></p>
+<p>Hostname in my case would be something in the convention of <cite>&lt;switch model&gt;.&lt;rack name&gt;.&lt;pod number&gt;.&lt;datacenter&gt;</cite> this could
+look like <cite>c3650g.tor-a1.pod-01.pit-shd-1</cite> which stands for…</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">c3650g</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">Cisco</span> <span class="pre">3650G</span> <span class="pre">switch</span> <span class="pre">model</span> <span class="pre">not</span> <span class="pre">required</span> <span class="pre">you</span> <span class="pre">may</span> <span class="pre">have</span> <span class="pre">a</span> <span class="pre">better</span> <span class="pre">way</span> <span class="pre">to</span> <span class="pre">dermine</span> <span class="pre">this</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">environment</span>
+<span class="pre">tor-a1</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">top</span> <span class="pre">of</span> <span class="pre">rack</span> <span class="pre">switch</span> <span class="pre">called</span> <span class="pre">a1</span> <span class="pre">so</span> <span class="pre">it's</span> <span class="pre">easy</span> <span class="pre">to</span> <span class="pre">locate</span> <span class="pre">inside</span> <span class="pre">the</span> <span class="pre">datacenter</span>
+<span class="pre">pod-01</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">first</span> <span class="pre">pod</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">datacenter</span> <span class="pre">normally</span> <span class="pre">logically</span> <span class="pre">divided</span> <span class="pre">by</span> <span class="pre">OOB</span> <span class="pre">networks</span> <span class="pre">or</span> <span class="pre">IP</span> <span class="pre">space.</span>
+<span class="pre">pit-shd-1</span> <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">datacenter</span> <span class="pre">some</span> <span class="pre">place</span> <span class="pre">in</span> <span class="pre">pittsburgh</span>
+<span class="pre">`</span></code></p>
+<p>The domain-name is something like website.com if you happened to own that domain and used it for all of the computers located
+inside this facility. You will likely have a dedicated DNS server that serves this domain name in your datacenter.</p>
+<p>The name-server is just the ip, hopefully you can enter more than one although i’m not sure how that configuration would look
+at this time since I only have one setup for testing.</p>
+<p># Setup SSH</p>
+<p>Before you start make sure you have done all configuration in the “Set Hostname &amp; DNS” section.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+enable
+configure terminal
+crypto key generate rsa
+end</p>
+<p>configure terminal
+line vty 0 4
+transport input ssh
+login local
+exit</p>
+<p>configure terminal
+username &lt;username&gt; password &lt;password&gt;</p>
+<p>copy running-config startup-config
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<p>You should now be able to log in with the username and password you have set. You can set multiple accounts as well. I imagine
+you can obtain the private key as well and use that but haven’t looked into it yet. To see what your current settings are you
+can run the following two commands.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">show</span> <span class="pre">ip</span> <span class="pre">ssh</span>
+<span class="pre">show</span> <span class="pre">ssh</span>
+<span class="pre">`</span></code></p>
+<p># List interfaces</p>
+<p>Not much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
+instead of whatever the true interface speed is.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">show</span> <span class="pre">interfaces</span> <span class="pre">status</span>
+<span class="pre">`</span></code></p>
+<p>If you want to filter for connected only interfaces on devices with a large number of ports..</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">show</span> <span class="pre">interfaces</span> <span class="pre">status</span> <span class="pre">|</span> <span class="pre">include</span> <span class="pre">connected</span>
+<span class="pre">`</span></code></p>
+<p># VLANs</p>
+<p>General overview of working with VLAN for noobs like me.</p>
+<p>To get an overview of the current/default VLANs on your switch and the ports connected to them run</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">show</span> <span class="pre">vlan</span>
+<span class="pre">`</span></code></p>
+<p>To create a new VLAN run the following commands on your switch. VLAN 2 is used in this example
+but you can use any VLAN that you wish. Some things to note is that <cite>no shutdown</cite> is used to
+bring the interface up since by default it is set to down. The default-gateway is not needed
+however I explicitly state it here in case you want to use a different gateway for the specific
+VLAN than the one used for all interfaces on the router.</p>
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
+enable
+configure terminal</p>
+<p>vlan 2
+name ToR
+exit</p>
+<p>interface Vlan 2
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
+enable
+configure terminal</p>
+<p>interface GigabitEthernet 0/33
+switchport access vlan 2
+exit</p>
+<p>copy running-config startup-config
+<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+<p>If you did everything correct the Vlan you configured should say <cite>Vlan2 is up, line protocol is up</cite>
+when you check the output of <cite>show interfaces</cite>. <cite>show interfaces brief</cite> should list all ports using
+the new VLAN as well.</p>
+<p>To test you can use the cisco ping command <cite>ping 192.168.1.1 source 10.0.0.1</cite> to ensure that your
+routing is setup properly.</p>
+<p>Note you will still have to setup a static route so that in this case the router handling
+<cite>192.168.1.1</cite> which in my case is a static route 10.0.0.1 -&gt; 192.168.1.8 where 192.168.1.8
+is the ip for VLAN 1 on my switch.</p>
+<p># Configure DHCP</p>
+<p>Very similiar to the steps for settingup up vlans for the most part you can configure your switch
+port to use DHCP to get it’s IP address.</p>
+<p><a href="#id13"><span class="problematic" id="id14">``</span></a>`
+enable
+configure terminal</p>
+<p>interface GigabitEthernet 0/1
+ip address dhcp
+exit</p>
+<p>copy running-config startup-config
+<a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+<p>This will allow you to let an upstream router acting as the DHCP set your IP instead of having to change it by hand
+when you need to make changes to your router.</p>
+<p># DHCP Forwarding</p>
+<p>If you have a DHCP server on another broadcast domain you can set the DHCP server the ToR switch
+should forward to using the following. In this example 192.168.1.5 is my DHCP server.
+<a href="#id19"><span class="problematic" id="id20">``</span></a>`
+enable
+configure terminal</p>
+<p>interface Vlan 2
+ip helper-address 192.168.1.5
+exit</p>
+<p>copy running-config startup-config
+<a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
+<p># Random</p>
+<p>To stop Cisco from trying to do a dns lookup when you type in an invalid command
+you can issue the following.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">no</span> <span class="pre">ip</span> <span class="pre">domain</span> <span class="pre">lookup</span>
+<span class="pre">`</span></code></p>
+<p>If you would like to not be blasted with logging while you are typing..</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">no</span> <span class="pre">logging</span> <span class="pre">console</span>
+<span class="pre">`</span></code></p>
+<p># Get System Temp Info</p>
+<p>If you are looking for info on if your system is overheating you can use</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">show</span> <span class="pre">env</span> <span class="pre">all</span>
+<span class="pre">`</span></code></p>
+<p>To return information about the temp, system fan, and temp thresholds.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Bookmarks</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Michael Schuett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/notes/ciscocatalyst3560G.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,285 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Scala Core Functions Overview &#8212; Bookmarks rc documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="scala-core-functions-overview">
+<h1>Scala Core Functions Overview<a class="headerlink" href="#scala-core-functions-overview" title="Permalink to this headline">¶</a></h1>
+<p>From time to time I forget some of the core scala functions because my memory is shit. For
+Most languages this is fine however if you search for a basic example you normally end up
+with some super complex example on stack overflow. This is a super simple look at what
+these functions do and a short explanation with links to the API docs.</p>
+<p>## variables</p>
+<p>Lets start off easy in scala you can declare variables in a few different ways. The following being
+one of the easiest.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span>
+<span class="pre">`</span></code></p>
+<p>Scala will figure out for you that the type is an int and you can later assign Ints to x. Real
+simple stuff. Scala offers another way to define variables as well.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">val</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span>
+<span class="pre">`</span></code></p>
+<p>When you do this Scala creates an immutable variable and will throw an error if you try to set x
+to something else later in your program. For the full detail on this read more here…</p>
+<p><a class="reference external" href="https://stackoverflow.com/questions/1791408/what-is-the-difference-between-a-var-and-val-definition-in-scala">https://stackoverflow.com/questions/1791408/what-is-the-difference-between-a-var-and-val-definition-in-scala</a></p>
+<p>If you would like to be super explicit about what is being assigned you can use the following syntax.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">val</span> <span class="pre">x:</span> <span class="pre">Int</span> <span class="pre">=</span> <span class="pre">5</span>
+<span class="pre">`</span></code></p>
+<p>## case statements</p>
+<p>## map def map[B](f: (A) ⇒ B): Map[B]
+<a class="reference external" href="http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#map[B](f:A=">http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#map[B](f:A=</a>&gt;B):scala.collection.immutable.Map[B]</p>
+<p>The following will loop over the provided array and print all elements in it.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(1,2,3,4,&quot;a&quot;).map(println</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>Note tha the <cite>_</cite> is functionally equivalant to the following
+Read more about it here <a class="reference external" href="http://ananthakumaran.in/2010/03/29/scala-underscore-magic.html">http://ananthakumaran.in/2010/03/29/scala-underscore-magic.html</a></p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(1,2,3,4,&quot;a&quot;).map(</span> <span class="pre">i</span> <span class="pre">=&gt;</span> <span class="pre">println(i))</span>
+<span class="pre">`</span></code></p>
+<p>If you want to loop over a map you can use the following syntax.
+This article provides a good overview of when you can expect to use
+<cite>()</cite> vs <cite>{}</cite> brackets in your code. It is worth a read.</p>
+<p><a class="reference external" href="https://stackoverflow.com/questions/4386127/what-is-the-formal-difference-in-scala-between-braces-and-parentheses-and-when">https://stackoverflow.com/questions/4386127/what-is-the-formal-difference-in-scala-between-braces-and-parentheses-and-when</a></p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Map(&quot;key&quot;</span> <span class="pre">-&gt;</span> <span class="pre">&quot;value&quot;).map{</span> <span class="pre">case(k,</span> <span class="pre">v)</span> <span class="pre">=&gt;</span> <span class="pre">println(k</span> <span class="pre">+</span> <span class="pre">&quot;:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">v)</span> <span class="pre">}</span>
+<span class="pre">`</span></code></p>
+<p>An alternative way to do the above is this.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Map(&quot;key&quot;</span> <span class="pre">-&gt;</span> <span class="pre">&quot;value&quot;).map(</span> <span class="pre">i</span> <span class="pre">=&gt;</span> <span class="pre">println(i._1</span> <span class="pre">+</span> <span class="pre">&quot;:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">i._2)</span> <span class="pre">)</span>
+<span class="pre">`</span></code></p>
+<p>I will not go into this much depth on all functions but much of the above will apply
+to most map/reduce functions in Scala.</p>
+<p>## flatMap</p>
+<p>def flatMap[B](f: (A) ⇒ GenTraversableOnce[B]): Map[B]
+<a class="reference external" href="http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#flatMap[B](f:A=">http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#flatMap[B](f:A=</a>&gt;scala.collection.GenTraversableOnce[B]):scala.collection.immutable.Map[B]</p>
+<p>The following returns an array with both internal arrays combined together.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(Array(1,4,5,6),</span> <span class="pre">Array(8,0,10,9)).flatMap(x</span> <span class="pre">=&gt;</span> <span class="pre">x)</span>
+<span class="pre">`</span></code></p>
+<p>It should be noted that for whatever reason <cite>_</cite> can’t be used in flatMap which I want to look
+into sometime and see why this is. However a shorthand for the above is this.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(Array(1,4,5,6),</span> <span class="pre">Array(8,0,10,9)).flatten</span>
+<span class="pre">`</span></code></p>
+<p>## flatMap vs map</p>
+<p>The difference between flatMap and map are fairly clear but a very nice thing about using
+flatMap over map is when you need to working with the Option/Some/None classes.</p>
+<p>Here is an example that shows how much easier flatMap can make your life.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+def toInt(s: String): Option[Int] = {</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>try {</dt>
+<dd>Some(Integer.parseInt(s.trim))</dd>
+<dt>} catch {</dt>
+<dd>// catch Exception to catch null ‘s’
+case e: Exception =&gt; None</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+<p>val strings = Seq(“1”, “2”, “foo”, “3”, “bar”)</p>
+<p>strings.map(toInt)
+# res0: Seq[Option[Int]] = List(Some(1), Some(2), None, Some(3), None)</p>
+<p>strings.flatMap(toInt)
+# res1: Seq[Int] = List(1, 2, 3)
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<p>You can see above that flatMap produces a result that is much easier to work with
+and arguably what you want most of the time.</p>
+<p>## foldLeft</p>
+<p><a class="reference external" href="https://dzone.com/articles/secret-powers-foldleft-scala">https://dzone.com/articles/secret-powers-foldleft-scala</a></p>
+<p>The following is a simple example that lets you sum all of the elements that are in an array.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(1,4,5,6,6,7).foldLeft(0)((sum,</span> <span class="pre">x)</span> <span class="pre">=&gt;</span> <span class="pre">sum</span> <span class="pre">+</span> <span class="pre">x)</span>
+<span class="pre">`</span></code></p>
+<p>An equivalent super condense version of this would be</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Array(1,4,5,6,6,7).foldLeft(0)(_</span> <span class="pre">+</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>## fold</p>
+<p>Fold is similar to fold in function but not implimentation. Fold is parallelizable
+where foldLeft is not. This makes it a good choice for use in frameworks like spark.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">List(1,2,5,4).fold(0)(_</span> <span class="pre">+</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>## aggregate</p>
+<p>This function is very similar to fold and in some cases almost exactly the same it like
+fold takes an initial value and then a function to apply to ever element of your collection.
+In addition to that it take another function to use when combining multiple sets which is
+only called when your collection is parallelizable.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">List(1,2,3,4,5).aggregate(0)(_</span> <span class="pre">+</span> <span class="pre">_,</span> <span class="pre">_</span> <span class="pre">+</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>The above function will return 15 and the second function to it will never actually be called
+since it’s just one list that it must compute and it doesn’t know how to parallelize. To take
+use of some magic lets make this list parallelizable.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">List(1,2,3,4,5).par.aggregate(0)(_</span> <span class="pre">+</span> <span class="pre">_,</span> <span class="pre">_</span> <span class="pre">+</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>This is cool but we get the same answer lets see whats actually going on now.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">scala&gt;</span> <span class="pre">List(1,2,3,4,5).par.aggregate(0)((x,y)</span> <span class="pre">=&gt;</span> <span class="pre">{println(x.toString</span> <span class="pre">+</span> <span class="pre">&quot;</span> <span class="pre">::</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">y.toString);</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y},</span> <span class="pre">(x,y)</span> <span class="pre">=&gt;</span> <span class="pre">{println(x.toString</span> <span class="pre">+</span> <span class="pre">&quot;</span> <span class="pre">:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">y.toString);</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y})</span>
+<span class="pre">#</span> <span class="pre">0</span> <span class="pre">::</span> <span class="pre">3</span>
+<span class="pre">#</span> <span class="pre">0</span> <span class="pre">::</span> <span class="pre">5</span>
+<span class="pre">#</span> <span class="pre">0</span> <span class="pre">::</span> <span class="pre">4</span>
+<span class="pre">#</span> <span class="pre">0</span> <span class="pre">::</span> <span class="pre">2</span>
+<span class="pre">#</span> <span class="pre">0</span> <span class="pre">::</span> <span class="pre">1</span>
+<span class="pre">#</span> <span class="pre">4</span> <span class="pre">:</span> <span class="pre">5</span>
+<span class="pre">#</span> <span class="pre">1</span> <span class="pre">:</span> <span class="pre">2</span>
+<span class="pre">#</span> <span class="pre">3</span> <span class="pre">:</span> <span class="pre">9</span>
+<span class="pre">#</span> <span class="pre">3</span> <span class="pre">:</span> <span class="pre">12</span>
+<span class="pre">#</span> <span class="pre">res24:</span> <span class="pre">Int</span> <span class="pre">=</span> <span class="pre">15</span>
+<span class="pre">`</span></code></p>
+<p>Looking at this it seems kind of silly we just moved all the computation to the second function now.
+Actually we made everything worse! since we double the amount of function calls my parallelizing this.
+Thats because our list is so small we don’t really use any advantage of the parallelization. Lets
+take a look at a much lager list.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">scala&gt;</span> <span class="pre">val</span> <span class="pre">list</span> <span class="pre">=</span> <span class="pre">(1</span> <span class="pre">to</span> <span class="pre">10000).toList.par</span>
+<span class="pre">#</span> <span class="pre">list:</span> <span class="pre">scala.collection.parallel.immutable.ParSeq[Int]</span> <span class="pre">=</span> <span class="pre">ParVector(1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19,</span> <span class="pre">20,</span> <span class="pre">21,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">24,</span> <span class="pre">25,</span> <span class="pre">26,</span> <span class="pre">27,</span> <span class="pre">28,</span> <span class="pre">29,</span> <span class="pre">30,</span> <span class="pre">31,</span> <span class="pre">32,</span> <span class="pre">33,</span> <span class="pre">34,</span> <span class="pre">35,</span> <span class="pre">36,</span> <span class="pre">37,</span> <span class="pre">38,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">41,</span> <span class="pre">42,</span> <span class="pre">43,</span> <span class="pre">44,</span> <span class="pre">45,</span> <span class="pre">46,</span> <span class="pre">47,</span> <span class="pre">48,</span> <span class="pre">49,</span> <span class="pre">50,</span> <span class="pre">51,</span> <span class="pre">52,</span> <span class="pre">53,</span> <span class="pre">54,</span> <span class="pre">55,</span> <span class="pre">56,</span> <span class="pre">57,</span> <span class="pre">58,</span> <span class="pre">59,</span> <span class="pre">60,</span> <span class="pre">61,</span> <span class="pre">62,</span> <span class="pre">63,</span> <span class="pre">64,</span> <span class="pre">65,</span> <span class="pre">66,</span> <span class="pre">67,</span> <span class="pre">68,</span> <span class="pre">69,</span> <span class="pre">70,</span> <span class="pre">71,</span> <span class="pre">72,</span> <span class="pre">73,</span> <span class="pre">74,</span> <span class="pre">75,</span> <span class="pre">76,</span> <span class="pre">77,</span> <span class="pre">78,</span> <span class="pre">79,</span> <span class="pre">80,</span> <span class="pre">81,</span> <span class="pre">82,</span> <span class="pre">83,</span> <span class="pre">84,</span> <span class="pre">85,</span> <span class="pre">86,</span> <span class="pre">87,</span> <span class="pre">88,</span> <span class="pre">89,</span> <span class="pre">90,</span> <span class="pre">91,</span> <span class="pre">92,</span> <span class="pre">93,</span> <span class="pre">94,</span> <span class="pre">95,</span> <span class="pre">96,</span> <span class="pre">97,</span> <span class="pre">98,</span> <span class="pre">99,</span> <span class="pre">100,</span> <span class="pre">101,</span> <span class="pre">102,</span> <span class="pre">103,</span> <span class="pre">104,</span> <span class="pre">105,</span> <span class="pre">106,</span> <span class="pre">107,</span> <span class="pre">108,</span> <span class="pre">109,</span> <span class="pre">110,</span> <span class="pre">111,</span> <span class="pre">112,</span> <span class="pre">113,</span> <span class="pre">114,</span> <span class="pre">115,</span> <span class="pre">116,</span> <span class="pre">117,</span> <span class="pre">118,</span> <span class="pre">119,</span> <span class="pre">120,</span> <span class="pre">121,</span> <span class="pre">122,</span> <span class="pre">123,</span> <span class="pre">124,</span> <span class="pre">125,</span> <span class="pre">126,</span> <span class="pre">127,</span> <span class="pre">128,</span> <span class="pre">129,</span> <span class="pre">130,</span> <span class="pre">131,</span> <span class="pre">132,</span> <span class="pre">133,</span> <span class="pre">134,</span> <span class="pre">135,</span> <span class="pre">136,</span> <span class="pre">137,</span> <span class="pre">138,</span> <span class="pre">139,</span> <span class="pre">140,</span> <span class="pre">141,</span> <span class="pre">142,</span> <span class="pre">143,</span> <span class="pre">144,</span> <span class="pre">145,</span> <span class="pre">146,</span> <span class="pre">147,</span> <span class="pre">148,</span> <span class="pre">149,</span> <span class="pre">150,</span> <span class="pre">151,</span> <span class="pre">152,</span> <span class="pre">153,</span> <span class="pre">154,</span> <span class="pre">155,</span> <span class="pre">156,</span> <span class="pre">157,</span> <span class="pre">158,</span> <span class="pre">159,</span> <span class="pre">160,</span> <span class="pre">161,</span> <span class="pre">162,</span> <span class="pre">163,</span> <span class="pre">164,</span> <span class="pre">165,</span> <span class="pre">166,</span> <span class="pre">167,</span> <span class="pre">168,...</span>
+<span class="pre">scala&gt;</span> <span class="pre">list.aggregate(0)(_</span> <span class="pre">+</span> <span class="pre">_,</span> <span class="pre">(x,y)</span> <span class="pre">=&gt;</span> <span class="pre">{println(x.toString</span> <span class="pre">+</span> <span class="pre">&quot;</span> <span class="pre">:</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">y.toString);</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y})</span>
+<span class="pre">#</span> <span class="pre">12246</span> <span class="pre">:</span> <span class="pre">36582</span>
+<span class="pre">#</span> <span class="pre">207246</span> <span class="pre">:</span> <span class="pre">231582</span>
+<span class="pre">#</span> <span class="pre">304746</span> <span class="pre">:</span> <span class="pre">329082</span>
+<span class="pre">#</span> <span class="pre">48828</span> <span class="pre">:</span> <span class="pre">146797</span>
+<span class="pre">#</span> <span class="pre">438828</span> <span class="pre">:</span> <span class="pre">538047</span>
+<span class="pre">#</span> <span class="pre">633828</span> <span class="pre">:</span> <span class="pre">733672</span>
+<span class="pre">#</span> <span class="pre">597246</span> <span class="pre">:</span> <span class="pre">621582</span>
+<span class="pre">#</span> <span class="pre">1218828</span> <span class="pre">:</span> <span class="pre">1320547</span>
+<span class="pre">#</span> <span class="pre">195625</span> <span class="pre">:</span> <span class="pre">586250</span>
+<span class="pre">#</span> <span class="pre">987246</span> <span class="pre">:</span> <span class="pre">1011582</span>
+<span class="pre">#</span> <span class="pre">1182246</span> <span class="pre">:</span> <span class="pre">1206582</span>
+<span class="pre">#</span> <span class="pre">1998828</span> <span class="pre">:</span> <span class="pre">2103047</span>
+<span class="pre">#</span> <span class="pre">2539375</span> <span class="pre">:</span> <span class="pre">2930000</span>
+<span class="pre">#</span> <span class="pre">2388828</span> <span class="pre">:</span> <span class="pre">2494297</span>
+<span class="pre">#</span> <span class="pre">4101875</span> <span class="pre">:</span> <span class="pre">4492500</span>
+<span class="pre">#</span> <span class="pre">4883125</span> <span class="pre">:</span> <span class="pre">5273750</span>
+<span class="pre">#</span> <span class="pre">499746</span> <span class="pre">:</span> <span class="pre">524082</span>
+<span class="pre">#</span> <span class="pre">1023828</span> <span class="pre">:</span> <span class="pre">1124922</span>
+<span class="pre">#</span> <span class="pre">10156875</span> <span class="pre">:</span> <span class="pre">11719375</span>
+<span class="pre">#</span> <span class="pre">450918</span> <span class="pre">:</span> <span class="pre">478379</span>
+<span class="pre">#</span> <span class="pre">402246</span> <span class="pre">:</span> <span class="pre">426582</span>
+<span class="pre">#</span> <span class="pre">828828</span> <span class="pre">:</span> <span class="pre">929297</span>
+<span class="pre">#</span> <span class="pre">1758125</span> <span class="pre">:</span> <span class="pre">2148750</span>
+<span class="pre">#</span> <span class="pre">3906875</span> <span class="pre">:</span> <span class="pre">5469375</span>
+<span class="pre">#</span> <span class="pre">976875</span> <span class="pre">:</span> <span class="pre">1367500</span>
+<span class="pre">#</span> <span class="pre">889746</span> <span class="pre">:</span> <span class="pre">914082</span>
+<span class="pre">#</span> <span class="pre">840918</span> <span class="pre">:</span> <span class="pre">870879</span>
+<span class="pre">#</span> <span class="pre">938418</span> <span class="pre">:</span> <span class="pre">969004</span>
+<span class="pre">#</span> <span class="pre">781875</span> <span class="pre">:</span> <span class="pre">2344375</span>
+<span class="pre">#</span> <span class="pre">3126250</span> <span class="pre">:</span> <span class="pre">9376250</span>
+<span class="pre">#</span> <span class="pre">792246</span> <span class="pre">:</span> <span class="pre">816582</span>
+<span class="pre">#</span> <span class="pre">1803828</span> <span class="pre">:</span> <span class="pre">1907422</span>
+<span class="pre">#</span> <span class="pre">1608828</span> <span class="pre">:</span> <span class="pre">1711797</span>
+<span class="pre">#</span> <span class="pre">3320625</span> <span class="pre">:</span> <span class="pre">3711250</span>
+<span class="pre">#</span> <span class="pre">7031875</span> <span class="pre">:</span> <span class="pre">8594375</span>
+<span class="pre">#</span> <span class="pre">15626250</span> <span class="pre">:</span> <span class="pre">21876250</span>
+<span class="pre">#</span> <span class="pre">12502500</span> <span class="pre">:</span> <span class="pre">37502500</span>
+<span class="pre">#</span> <span class="pre">res22:</span> <span class="pre">Int</span> <span class="pre">=</span> <span class="pre">50005000</span>
+<span class="pre">`</span></code></p>
+<p>As you can see scala is able to chunk this up more effectively and we only run the second function
+once a significant number of numbers have been added together in the first.</p>
+<p>## reduce</p>
+<p>Reduce is similar to fold except it doesn’t take an initial value. It may have some other differences
+but I don’t overly care about them right now… I’ll add more late.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">List(1,2,3,4,5).reduce(_</span> <span class="pre">+</span> <span class="pre">_)</span>
+<span class="pre">`</span></code></p>
+<p>This returns 15 as you might have expected.</p>
+<p>## groupBy</p>
+<p>Filter would be more suited for this but this is a simple example to see how groupBy works.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">List(1,4,5,6).groupBy(_</span> <span class="pre">&gt;</span> <span class="pre">5)</span>
+<span class="pre">#</span> <span class="pre">scala.collection.immutable.Map[Boolean,List[Int]]</span> <span class="pre">=</span> <span class="pre">Map(false</span> <span class="pre">-&gt;</span> <span class="pre">List(1,</span> <span class="pre">4,</span> <span class="pre">5),</span> <span class="pre">true</span> <span class="pre">-&gt;</span> <span class="pre">List(6))</span>
+<span class="pre">`</span></code></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Bookmarks</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Michael Schuett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../../_sources/notes/scala/1.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

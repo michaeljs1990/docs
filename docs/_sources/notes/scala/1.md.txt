@@ -1,0 +1,252 @@
+Scala Core Functions Overview
+=============================
+
+From time to time I forget some of the core scala functions because my memory is shit. For
+Most languages this is fine however if you search for a basic example you normally end up
+with some super complex example on stack overflow. This is a super simple look at what 
+these functions do and a short explanation with links to the API docs.
+
+## variables
+
+Lets start off easy in scala you can declare variables in a few different ways. The following being
+one of the easiest.
+
+```
+var x = 5
+```
+
+Scala will figure out for you that the type is an int and you can later assign Ints to x. Real
+simple stuff. Scala offers another way to define variables as well.
+
+```
+val x = 5
+```
+
+When you do this Scala creates an immutable variable and will throw an error if you try to set x
+to something else later in your program. For the full detail on this read more here...
+
+https://stackoverflow.com/questions/1791408/what-is-the-difference-between-a-var-and-val-definition-in-scala
+
+If you would like to be super explicit about what is being assigned you can use the following syntax.
+
+```
+val x: Int = 5
+```
+
+## case statements
+
+## map def map[B](f: (A) ⇒ B): Map[B]
+http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#map[B](f:A=>B):scala.collection.immutable.Map[B]
+
+The following will loop over the provided array and print all elements in it.
+
+```
+Array(1,2,3,4,"a").map(println _)
+```
+
+Note tha the `_` is functionally equivalant to the following
+Read more about it here http://ananthakumaran.in/2010/03/29/scala-underscore-magic.html
+
+```
+Array(1,2,3,4,"a").map( i => println(i))
+```
+
+If you want to loop over a map you can use the following syntax.
+This article provides a good overview of when you can expect to use
+`()` vs `{}` brackets in your code. It is worth a read.
+
+https://stackoverflow.com/questions/4386127/what-is-the-formal-difference-in-scala-between-braces-and-parentheses-and-when
+
+```
+Map("key" -> "value").map{ case(k, v) => println(k + ": " + v) }
+```
+
+An alternative way to do the above is this.
+
+```
+Map("key" -> "value").map( i => println(i._1 + ": " + i._2) )
+```
+
+I will not go into this much depth on all functions but much of the above will apply
+to most map/reduce functions in Scala.
+
+## flatMap
+
+def flatMap[B](f: (A) ⇒ GenTraversableOnce[B]): Map[B]
+http://www.scala-lang.org/api/2.12.3/scala/collection/immutable/Map.html#flatMap[B](f:A=>scala.collection.GenTraversableOnce[B]):scala.collection.immutable.Map[B]
+
+The following returns an array with both internal arrays combined together.
+
+```
+Array(Array(1,4,5,6), Array(8,0,10,9)).flatMap(x => x)
+```
+
+It should be noted that for whatever reason `_` can't be used in flatMap which I want to look
+into sometime and see why this is. However a shorthand for the above is this.
+
+```
+Array(Array(1,4,5,6), Array(8,0,10,9)).flatten
+```
+
+## flatMap vs map 
+
+The difference between flatMap and map are fairly clear but a very nice thing about using
+flatMap over map is when you need to working with the Option/Some/None classes.
+
+Here is an example that shows how much easier flatMap can make your life.
+
+```
+def toInt(s: String): Option[Int] = {
+    try {
+        Some(Integer.parseInt(s.trim))
+    } catch {
+        // catch Exception to catch null 's'
+        case e: Exception => None
+    }
+}
+
+val strings = Seq("1", "2", "foo", "3", "bar")
+
+strings.map(toInt)
+# res0: Seq[Option[Int]] = List(Some(1), Some(2), None, Some(3), None)
+
+strings.flatMap(toInt)
+# res1: Seq[Int] = List(1, 2, 3)
+```
+
+You can see above that flatMap produces a result that is much easier to work with
+and arguably what you want most of the time.
+
+## foldLeft
+
+https://dzone.com/articles/secret-powers-foldleft-scala
+
+The following is a simple example that lets you sum all of the elements that are in an array.
+
+```
+Array(1,4,5,6,6,7).foldLeft(0)((sum, x) => sum + x)
+```
+
+An equivalent super condense version of this would be
+
+```
+Array(1,4,5,6,6,7).foldLeft(0)(_ + _)
+```
+
+## fold
+
+Fold is similar to fold in function but not implimentation. Fold is parallelizable
+where foldLeft is not. This makes it a good choice for use in frameworks like spark.
+
+```
+List(1,2,5,4).fold(0)(_ + _)
+``` 
+
+## aggregate
+
+This function is very similar to fold and in some cases almost exactly the same it like
+fold takes an initial value and then a function to apply to ever element of your collection.
+In addition to that it take another function to use when combining multiple sets which is
+only called when your collection is parallelizable.
+
+```
+List(1,2,3,4,5).aggregate(0)(_ + _, _ + _)
+```
+
+The above function will return 15 and the second function to it will never actually be called
+since it's just one list that it must compute and it doesn't know how to parallelize. To take
+use of some magic lets make this list parallelizable.
+
+```
+List(1,2,3,4,5).par.aggregate(0)(_ + _, _ + _)
+```
+
+This is cool but we get the same answer lets see whats actually going on now.
+
+```
+scala> List(1,2,3,4,5).par.aggregate(0)((x,y) => {println(x.toString + " :: " + y.toString); x + y}, (x,y) => {println(x.toString + " : " + y.toString); x + y})
+# 0 :: 3
+# 0 :: 5
+# 0 :: 4
+# 0 :: 2
+# 0 :: 1
+# 4 : 5
+# 1 : 2
+# 3 : 9
+# 3 : 12
+# res24: Int = 15
+```
+
+Looking at this it seems kind of silly we just moved all the computation to the second function now.
+Actually we made everything worse! since we double the amount of function calls my parallelizing this.
+Thats because our list is so small we don't really use any advantage of the parallelization. Lets
+take a look at a much lager list.
+
+```
+scala> val list = (1 to 10000).toList.par
+# list: scala.collection.parallel.immutable.ParSeq[Int] = ParVector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168,...
+scala> list.aggregate(0)(_ + _, (x,y) => {println(x.toString + " : " + y.toString); x + y})
+# 12246 : 36582
+# 207246 : 231582
+# 304746 : 329082
+# 48828 : 146797
+# 438828 : 538047
+# 633828 : 733672
+# 597246 : 621582
+# 1218828 : 1320547
+# 195625 : 586250
+# 987246 : 1011582
+# 1182246 : 1206582
+# 1998828 : 2103047
+# 2539375 : 2930000
+# 2388828 : 2494297
+# 4101875 : 4492500
+# 4883125 : 5273750
+# 499746 : 524082
+# 1023828 : 1124922
+# 10156875 : 11719375
+# 450918 : 478379
+# 402246 : 426582
+# 828828 : 929297
+# 1758125 : 2148750
+# 3906875 : 5469375
+# 976875 : 1367500
+# 889746 : 914082
+# 840918 : 870879
+# 938418 : 969004
+# 781875 : 2344375
+# 3126250 : 9376250
+# 792246 : 816582
+# 1803828 : 1907422
+# 1608828 : 1711797
+# 3320625 : 3711250
+# 7031875 : 8594375
+# 15626250 : 21876250
+# 12502500 : 37502500
+# res22: Int = 50005000
+``` 
+
+As you can see scala is able to chunk this up more effectively and we only run the second function 
+once a significant number of numbers have been added together in the first.
+
+## reduce
+
+Reduce is similar to fold except it doesn't take an initial value. It may have some other differences
+but I don't overly care about them right now... I'll add more late.
+
+```
+List(1,2,3,4,5).reduce(_ + _)
+```
+
+This returns 15 as you might have expected.
+
+## groupBy
+
+Filter would be more suited for this but this is a simple example to see how groupBy works.
+
+```
+List(1,4,5,6).groupBy(_ > 5)
+# scala.collection.immutable.Map[Boolean,List[Int]] = Map(false -> List(1, 4, 5), true -> List(6)) 
+```
+
+

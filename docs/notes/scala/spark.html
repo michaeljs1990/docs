@@ -1,0 +1,310 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Spark &#8212; Bookmarks rc documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="spark">
+<h1>Spark<a class="headerlink" href="#spark" title="Permalink to this headline">¶</a></h1>
+<p>## API</p>
+<p>Check out the Spark API here for digging into much of what will be
+mentioned in the section below.</p>
+<p><a class="reference external" href="https://spark.apache.org/docs/2.1.0/api/scala/index.html">https://spark.apache.org/docs/2.1.0/api/scala/index.html</a></p>
+<p>## Config</p>
+<p>You can configure spark to run locally when developing a script using the following
+configuration.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._</p>
+<p>val conf: SparkConf = new SparkConf().setMaster(“local”).setAppName(“Wikipedia Ranking”)
+val sc: SparkContext = new SparkContext(conf)
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<p>After running the above you will also get an output that tells you the sparkUI has started
+and you can visit is on port 4040 in your local browser for troubleshooting.</p>
+<p>## RDDs</p>
+<p>Resilient Distributed Dataset are immutable collections of data that are designed to be operated
+on in parallel. Below is an example of how to create a dataset from a file and then parse is into
+an object using map.</p>
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
+import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._</p>
+<p>import org.apache.spark.rdd.RDD</p>
+<p>val wikiRdd: RDD[WikipediaArticle] = sc.textFile(WikipediaData.filePath).map(WikipediaData.parse _)
+<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+<p>For testing purposes you can also create an RDD using the following.</p>
+<p><a href="#id13"><span class="problematic" id="id14">``</span></a>`
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, “India”),
+(“U”, “USA”),
+(“W”, “West”)))</div></blockquote>
+<p><a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+<p>I have included the type of <cite>RDD[Tuple2[String, String]]</cite> to show you a few things. First that
+the <cite>parallelize</cite> function takes a <cite>List</cite> but returns an RDD and second that scala has a <cite>Tuple*</cite>
+type. This goes from <cite>Tuple1</cite> to <cite>Tuple22</cite>. You can read more about this here.</p>
+<p><a class="reference external" href="https://underscore.io/blog/posts/2016/10/11/twenty-two.html">https://underscore.io/blog/posts/2016/10/11/twenty-two.html</a></p>
+<p>Note that you can also use <cite>sample</cite> or <cite>takeSample</cite> to return a sub-section of the RDD when you
+are trying to write some code that utilizes it.</p>
+<p>## Pair RDDs</p>
+<p>Pair RDDs are very similar to normal RDDs except they offer a few additional functions
+that let you take advantage of the key more easily.</p>
+<p>Here is an example of how to create one.</p>
+<p><a href="#id19"><span class="problematic" id="id20">``</span></a>`
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, “India”),
+(“U”, “USA”),
+(“I”, “Inga”),
+(“W”, “West”)))</div></blockquote>
+<p><a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
+<p>You may notice the RDD in the <cite>RDDs</cite> section is infact a pair RDD as well. You can take
+advantage of this with the following methods <cite>reduceByKey</cite>, <cite>groupByKey</cite>, and <cite>join</cite>.</p>
+<p><cite>groupByKey</cite></p>
+<p>Collect is only called below because without it nothing actually would happen.</p>
+<p><a href="#id25"><span class="problematic" id="id26">``</span></a>`
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, “India”),
+(“U”, “USA”),
+(“I”, “Inga”),
+(“W”, “West”)))</div></blockquote>
+<p>rdd.groupByKey().collect()
+# res17: Array[(String, Iterable[String])] = Array((I,CompactBuffer(India, Inga)), (U,CompactBuffer(USA)), (W,CompactBuffer(West)))
+<a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a></p>
+<p><cite>reduceByKey</cite></p>
+<p>This is another contrived example but just serves to show you how to call it.</p>
+<p><a href="#id31"><span class="problematic" id="id32">``</span></a>`
+val rdd: RDD[Tuple2[String, Int]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, 10),
+(“U”, 23),
+(“I”, 42),
+(“W”, 24)))</div></blockquote>
+<p>rdd.reduceByKey(_ + _).collect()
+# res0: Array[(String, Int)] = Array((I,52), (U,23), (W,24))
+<a href="#id33"><span class="problematic" id="id34">``</span></a><a href="#id35"><span class="problematic" id="id36">`</span></a></p>
+<p><cite>mapValue</cite></p>
+<p>This allows you to apply a function or whatever to each value in a pair RDD.</p>
+<p><a href="#id37"><span class="problematic" id="id38">``</span></a>`
+val rdd: RDD[Tuple2[String, Int]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, 10),
+(“U”, 23),
+(“I”, 42),
+(“W”, 24)))</div></blockquote>
+<p>rdd.mapValues(_ * 2).collect()
+# res6: Array[(String, Int)] = Array((I,20), (U,46), (I,84), (W,48))
+<a href="#id39"><span class="problematic" id="id40">``</span></a><a href="#id41"><span class="problematic" id="id42">`</span></a></p>
+<p><cite>countByKey</cite></p>
+<p>Count number of elements that each key has.</p>
+<p><a href="#id43"><span class="problematic" id="id44">``</span></a>`
+val rdd: RDD[Tuple2[String, Int]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, 10),
+(“U”, 23),
+(“I”, 42),
+(“W”, 24)))</div></blockquote>
+<p>rdd.countByKey()
+# res13: scala.collection.Map[String,Long] = Map(I -&gt; 2, U -&gt; 1, W -&gt; 1)
+<a href="#id45"><span class="problematic" id="id46">``</span></a><a href="#id47"><span class="problematic" id="id48">`</span></a></p>
+<p>## RDDs and Joins</p>
+<p>Here is an example of the <cite>join</cite> function in spark which is actually an inner join.</p>
+<p><a href="#id49"><span class="problematic" id="id50">``</span></a>`
+val rdd1 = sc.parallelize(List((1, “Mike”), (2, “Abby”), (1, “Jeff”), (4, “Harry”), (5, “Potter”)))
+val rdd2 = sc.parallelize(List((1, (“A”, “B”)), (5, (“B”, “B”)), (6, (“C”, “B”)), (1, (“Z”, “T”))))</p>
+<p>rdd1.join(rdd2).collect()
+# res19: Array[(Int, (String, (String, String)))] = Array((1,(Mike,(A,B))), (1,(Mike,(Z,T))), (1,(Jeff,(A,B))), (1,(Jeff,(Z,T))), (5,(Potter,(B,B))))
+<a href="#id51"><span class="problematic" id="id52">``</span></a><a href="#id53"><span class="problematic" id="id54">`</span></a></p>
+<p>The important thing to note is that the keys with 4 and 6 in them are no longer in the list. This is because
+it had nothing in common with the other list so it was dropped.</p>
+<p>Outer joins allow you to pick what data is most important to you see the following example.</p>
+<p><a href="#id55"><span class="problematic" id="id56">``</span></a>`
+val rdd1 = sc.parallelize(List((1, “Mike”), (2, “Abby”), (1, “Jeff”), (4, “Harry”), (5, “Potter”)))
+val rdd2 = sc.parallelize(List((1, (“A”, “B”)), (5, (“B”, “B”)), (6, (“C”, “B”)), (1, (“Z”, “T”))))</p>
+<p>rdd1.leftOuterJoin(rdd2).collect()
+# res1: Array[(Int, (String, Option[(String, String)]))] = Array((4,(Harry,None)), (1,(Mike,Some((A,B)))), (1,(Mike,Some((Z,T)))), (1,(Jeff,Some((A,B)))), (1,(Jeff,Some((Z,T)))), (5,(Potter,Some((B,B)))), (2,(Abby,None)))
+<a href="#id57"><span class="problematic" id="id58">``</span></a><a href="#id59"><span class="problematic" id="id60">`</span></a></p>
+<p>With left outter join we have told it that we care most about the data on “left” or rdd1 in this case.
+As you can see the key of 4 has been included in the computed list with an extra value of None added
+since it had nothing to join with.</p>
+<p><a href="#id61"><span class="problematic" id="id62">``</span></a>`
+val rdd1 = sc.parallelize(List((1, “Mike”), (2, “Abby”), (1, “Jeff”), (4, “Harry”), (5, “Potter”)))
+val rdd2 = sc.parallelize(List((1, (“A”, “B”)), (5, (“B”, “B”)), (6, (“C”, “B”)), (1, (“Z”, “T”))))</p>
+<p>rdd1.leftOuterJoin(rdd2).collect()
+# res2: Array[(Int, (Option[String], (String, String)))] = Array((1,(Some(Mike),(A,B))), (1,(Some(Mike),(Z,T))), (1,(Some(Jeff),(A,B))), (1,(Some(Jeff),(Z,T))), (6,(None,(C,B))), (5,(Some(Potter),(B,B))))
+<a href="#id63"><span class="problematic" id="id64">``</span></a><a href="#id65"><span class="problematic" id="id66">`</span></a></p>
+<p>This is doing the same as left join except we have decided that rdd2 is the data we care about so
+the key of 6 has been included in the output and 4 has been dropped.</p>
+<p>## Shuffling</p>
+<p>Shuffling is important to consider when performing operations on RDDs. Take for example the case that you
+have 10 nodes and an RDD in the form of <cite>(Key, Value)</cite> that has been partitioned across the cluster. If you
+wanted to <cite>groupByKey</cite> each node in the cluster has to talk to each and every other node in the cluster to
+find out what Values belong to what Key. This is a lot of network traffic if you have large sets of data. If
+you instead reducedByKey it will reduce locally before talking over the network so instead of every <cite>(Key, Value)</cite>
+pair needing to make a network call you are only doing it once per node in the form of <cite>(Key, (Values))</cite> after
+your reduce has finished.</p>
+<p>The following functions might cause shuffles.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">cogroup</span>
+<span class="pre">groupWith</span>
+<span class="pre">join</span>
+<span class="pre">leftOuterJoin</span>
+<span class="pre">rightOuterJoin</span>
+<span class="pre">groupByKey</span>
+<span class="pre">reduceByKey</span>
+<span class="pre">combineByKey</span>
+<span class="pre">distinct</span>
+<span class="pre">intersection</span>
+<span class="pre">repartition</span>
+<span class="pre">coalesce</span>
+<span class="pre">`</span></code></p>
+<p>## Partitioning</p>
+<p>You can partition your data in a few different ways in Spark depending on what makes sense. The most
+common are range partitioning and hash partitioning.</p>
+<p>Here is an example of range partitioning.</p>
+<p><a href="#id67"><span class="problematic" id="id68">``</span></a>`
+import org.apache.spark.RangePartitioner</p>
+<dl class="docutils">
+<dt>val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</dt>
+<dd>(“I”, “India”),
+(“U”, “USA”),
+(“W”, “West”)))</dd>
+</dl>
+<p>val rp = new RangePartitioner(3, rdd)
+val parts = rdd.partitionBy(rp).cache()</p>
+<p>// This will let you peek inside each partition to see what is going on
+// try changing the partition size and see what happens
+parts.mapPartitionsWithIndex( (x,y) =&gt; { println(x); y.foreach(println); y } ).collect()
+<a href="#id69"><span class="problematic" id="id70">``</span></a><a href="#id71"><span class="problematic" id="id72">`</span></a></p>
+<p>The following is how you would use a Hash partitioner that has 3 partitions.</p>
+<p><a href="#id73"><span class="problematic" id="id74">``</span></a>`
+import org.apache.spark.HashPartitioner</p>
+<p>val rp = new HashPartitioner(3)
+val parts = rdd.partitionBy(rp).cache()
+<a href="#id75"><span class="problematic" id="id76">``</span></a><a href="#id77"><span class="problematic" id="id78">`</span></a></p>
+<p>When you have a partitioned set of data you can perform most operations except <cite>map</cite> or <cite>flatMap</cite>.
+This is because you can alter the keys of the partition when running these which is extreamly
+expensive.</p>
+<p>## Caching</p>
+<p>By default an RDD is recomputed everytime you run an action on it. If your RDD is not going to change
+you likely will want to cache it in memory so multiple operations can be run without the performance
+hit of loading it into memory.</p>
+<p><a href="#id79"><span class="problematic" id="id80">``</span></a>`
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, “India”),
+(“U”, “USA”),
+(“W”, “West”))).cache()</div></blockquote>
+<p><a href="#id81"><span class="problematic" id="id82">``</span></a><a href="#id83"><span class="problematic" id="id84">`</span></a></p>
+<p>You can also use <cite>persist</cite> instead of <cite>cache</cite> if you so fancy.</p>
+<p>A benifit of using cache can be seen in the following example of code.</p>
+<p><a href="#id85"><span class="problematic" id="id86">``</span></a>`
+val rdd: RDD[Tuple2[String, String]] = sc.parallelize(List(</p>
+<blockquote>
+<div>(“I”, “India”),
+(“U”, “USA”),
+(“W”, “West”)))</div></blockquote>
+<p>val xx = rdd.flatMap( x =&gt; x._1 + x._2).cache()</p>
+<p>xx.collect()
+xx.count()
+<a href="#id87"><span class="problematic" id="id88">``</span></a><a href="#id89"><span class="problematic" id="id90">`</span></a></p>
+<p>If we had not called <cite>cache</cite> when making the rdd xx would have been computes twice.
+Once for when we called collect and once when we called count. However since it was
+cached the rdd is only loaded once.</p>
+<p>Read more about it here <a class="reference external" href="https://stackoverflow.com/questions/28981359/why-do-we-need-to-call-cache-or-persist-on-a-rdd">https://stackoverflow.com/questions/28981359/why-do-we-need-to-call-cache-or-persist-on-a-rdd</a></p>
+<p>## Debug Workflow</p>
+<p>After reading all of the above you are likely now concerned that you have written some super shitty
+scala code that is constantly shuffling data. The bad news is you 100% did but the good news is that
+you have a few functions to debug it.</p>
+<p>On any RDD you can call the function <cite>dependencies</cite> which will output a high level list of operations
+that are about to be performed. You can all use <cite>toDebugString</cite> which will give you a little more
+insight into what is happening.</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Bookmarks</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Michael Schuett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../../_sources/notes/scala/spark.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

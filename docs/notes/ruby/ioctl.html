@@ -1,0 +1,148 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ioctl in Ruby &#8212; Bookmarks rc documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="ioctl-in-ruby">
+<h1>ioctl in Ruby<a class="headerlink" href="#ioctl-in-ruby" title="Permalink to this headline">¶</a></h1>
+<p>I’ll add a more detailed breakdown of this code but for now here it is.</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+#!/usr/bin/env ruby</p>
+<p>require ‘socket’</p>
+<p>SIOCETHTOOL = 0x8946
+ETHTOOL_GRINGPARAM = 0x00000010
+ETHTOOL_SRINGPARAM = 0x00000011</p>
+<p>sock = UDPSocket.new</p>
+<p># <a class="reference external" href="https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/include/uapi/linux/ethtool.h#L487">https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/include/uapi/linux/ethtool.h#L487</a>
+ringparam_struct = [ETHTOOL_GRINGPARAM].pack “Vx32”
+ifreq = [“enp0s31f6”, ringparam_struct].pack “a16P36”
+sock.ioctl(SIOCETHTOOL, ifreq)</p>
+<dl class="docutils">
+<dt>=begin</dt>
+<dd><p class="first">struct ethtool_ringparam - RX/TX ring parameters
+&#64;cmd: Command number = %ETHTOOL_GRINGPARAM or %ETHTOOL_SRINGPARAM
+&#64;rx_max_pending: Maximum supported number of pending entries per</p>
+<blockquote>
+<div>RX ring.  Read-only.</div></blockquote>
+<dl class="docutils">
+<dt>&#64;rx_mini_max_pending: Maximum supported number of pending entries</dt>
+<dd>per RX mini ring.  Read-only.</dd>
+<dt>&#64;rx_jumbo_max_pending: Maximum supported number of pending entries</dt>
+<dd>per RX jumbo ring.  Read-only.</dd>
+<dt>&#64;tx_max_pending: Maximum supported number of pending entries per</dt>
+<dd>TX ring.  Read-only.</dd>
+</dl>
+<p>&#64;rx_pending: Current maximum number of pending entries per RX ring
+&#64;rx_mini_pending: Current maximum number of pending entries per RX</p>
+<blockquote>
+<div>mini ring</div></blockquote>
+<dl class="last docutils">
+<dt>&#64;rx_jumbo_pending: Current maximum number of pending entries per RX</dt>
+<dd>jumbo ring</dd>
+<dt>&#64;tx_pending: Current maximum supported number of pending entries</dt>
+<dd>per TX ring</dd>
+</dl>
+</dd>
+</dl>
+<p>=end
+rv =  ringparam_struct.unpack “V9”</p>
+<p># pop off the GRINGPARAM cmd from the struct
+_, <a href="#id3"><span class="problematic" id="id4">*</span></a>tail = rv</p>
+<p># To see what is all changable by the user you can read the source code here
+# <a class="reference external" href="https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/drivers/net/ethernet/freescale/gianfar_ethtool.c#L419">https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/drivers/net/ethernet/freescale/gianfar_ethtool.c#L419</a>
+ifreq = tail.insert(0, ETHTOOL_SRINGPARAM)
+ifreq[5] = 512
+ifreq[8] = 512</p>
+<p># Now lets set the data
+ringparam_struct = ifreq.pack “V9”
+ifreq = [“enp0s31f6”, ringparam_struct].pack “a16P36”
+sock.ioctl(SIOCETHTOOL, ifreq)
+<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Bookmarks</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Michael Schuett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../../_sources/notes/ruby/ioctl.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
