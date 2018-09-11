@@ -24,9 +24,9 @@ copyright = '2018, Michael Schuett'
 author = 'Michael Schuett'
 
 # The short X.Y version
-version = ''
+version = '1.0'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = 'rc'
 
 
 # -- General configuration ---------------------------------------------------
@@ -49,7 +49,7 @@ templates_path = ['.templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = '.md'
 
 # The master toctree document.
 master_doc = 'index'
