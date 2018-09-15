@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>} &#8212; Bookmarks rc documentation</title>
+    <title>SUID/GUID Quirks &#8212; Bookmarks rc documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -31,77 +31,85 @@
 
           <div class="body" role="main">
             
-  <p>Inspired by <a class="reference external" href="https://twitter.com/b0rk/status/801233053699940352">https://twitter.com/b0rk/status/801233053699940352</a></p>
-<p># SUID/GUID Quirks</p>
+  <p>Inspired by https://twitter.com/b0rk/status/801233053699940352</p>
+<div class="section" id="suid-guid-quirks">
+<span id="suid-guid-quirks"></span><h1>SUID/GUID Quirks<a class="headerlink" href="#suid-guid-quirks" title="Permalink to this headline">¶</a></h1>
 <p>This will cover some of the quirks of linux file permissions that I often forget.</p>
 <p>First note that if you are trying to use SUID or GUID on a filesystem you need to check if nosuid is set. You can easily test
-for this by running <cite>mount | grep /filesystem</cite> which will show all the mount params for the given filesystem. If you see
+for this by running <code class="docutils literal notranslate"><span class="pre">mount</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">/filesystem</span></code> which will show all the mount params for the given filesystem. If you see
 nosuid in this list using the suid and guid bits will be ignored. Here is an excerpt from the mount man page about the mount option.</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
-nosuid</p>
-<p>Do not allow set-user-identifier or set-group-identifier bits to take effect.
-(This seems safe, but is in fact rather unsafe if you have suidperl(1) installed.)
-<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nosuid</span>
+
+<span class="n">Do</span> <span class="ow">not</span> <span class="n">allow</span> <span class="nb">set</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">identifier</span> <span class="ow">or</span> <span class="nb">set</span><span class="o">-</span><span class="n">group</span><span class="o">-</span><span class="n">identifier</span> <span class="n">bits</span> <span class="n">to</span> <span class="n">take</span> <span class="n">effect</span><span class="o">.</span> 
+<span class="p">(</span><span class="n">This</span> <span class="n">seems</span> <span class="n">safe</span><span class="p">,</span> <span class="n">but</span> <span class="ow">is</span> <span class="ow">in</span> <span class="n">fact</span> <span class="n">rather</span> <span class="n">unsafe</span> <span class="k">if</span> <span class="n">you</span> <span class="n">have</span> <span class="n">suidperl</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">installed</span><span class="o">.</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Another thing to note is that only binary files properly use SUID/GUID bits for security reasons. More on this
-can be seen [here](<a class="reference external" href="http://unix.stackexchange.com/questions/130906/why-does-setuid-not-work">http://unix.stackexchange.com/questions/130906/why-does-setuid-not-work</a>).</p>
-<p># SUID/GUID Example</p>
+can be seen <a class="reference external" href="http://unix.stackexchange.com/questions/130906/why-does-setuid-not-work">here</a>.</p>
+</div>
+<div class="section" id="suid-guid-example">
+<span id="suid-guid-example"></span><h1>SUID/GUID Example<a class="headerlink" href="#suid-guid-example" title="Permalink to this headline">¶</a></h1>
 <p>SUID/GUID bits allow you to set the user or group that the program will be run as regardless of the user who executes the program.
-More history on it can be found [here](<a class="reference external" href="http://www.thegeekstuff.com/2013/02/sticky-bit/">http://www.thegeekstuff.com/2013/02/sticky-bit/</a>).</p>
+More history on it can be found <a class="reference external" href="http://www.thegeekstuff.com/2013/02/sticky-bit/">here</a>.</p>
 <p>The following will create a file that has the setUID bit set however since this only sets the setUID bit and
 does not set the executable bit as well this does nothing and other users are not able to run this file as the
-user who created the file [Reference](<a class="reference external" href="http://unix.stackexchange.com/questions/158448/what-is-the-purpose-of-setuid-enabled-with-no-executable-bit">http://unix.stackexchange.com/questions/158448/what-is-the-purpose-of-setuid-enabled-with-no-executable-bit</a>).</p>
+user who created the file <a class="reference external" href="http://unix.stackexchange.com/questions/158448/what-is-the-purpose-of-setuid-enabled-with-no-executable-bit">Reference</a>.</p>
 <p>This was the example c program I used for seeing if SUID was being set how I expected.</p>
-<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
-// binary.c
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt;</p>
-<p>int main()
-{</p>
-<blockquote>
-<div>printf(“uid: %d n”, geteuid());
-system(“id -u”);
-return 0;</div></blockquote>
-<div class="section" id="id9">
-<h1>}<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">binary</span><span class="o">.</span><span class="n">c</span>
+<span class="c1">#include &lt;stdio.h&gt;</span>
+<span class="c1">#include &lt;stdlib.h&gt;</span>
+<span class="c1">#include &lt;sys/types.h&gt;</span>
+<span class="c1">#include &lt;unistd.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;uid: </span><span class="si">%d</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">geteuid</span><span class="p">());</span>
+  <span class="n">system</span><span class="p">(</span><span class="s2">&quot;id -u&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>Then I ran the following to set the SUID bit.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">$</span> <span class="pre">gcc</span> <span class="pre">binary.c</span> <span class="pre">-o</span> <span class="pre">binary</span>
-<span class="pre">$</span> <span class="pre">chmod</span> <span class="pre">u+s</span> <span class="pre">binary</span>
-<span class="pre">$</span> <span class="pre">ls</span> <span class="pre">-la</span>
-<span class="pre">total</span> <span class="pre">0</span>
-<span class="pre">-rwSrw-r--</span>&#160; <span class="pre">1</span> <span class="pre">michael</span> <span class="pre">michael</span>&#160;&#160;&#160; <span class="pre">0</span> <span class="pre">nov</span> <span class="pre">26</span> <span class="pre">20:39</span> <span class="pre">binary</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ gcc binary.c -o binary
+$ chmod u+s binary
+$ ls -la
+total 0
+-rwSrw-r--  1 michael michael    0 nov 26 20:39 binary
+</pre></div>
+</div>
 <p>The following will make the file executable and then you can test running the file as another user.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">$</span> <span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">binary</span>
-<span class="pre">$</span> <span class="pre">ls</span> <span class="pre">-la</span>
-<span class="pre">$</span> <span class="pre">ls</span> <span class="pre">-la</span>
-<span class="pre">total</span> <span class="pre">0</span>
-<span class="pre">-rwsrw-r--</span>&#160; <span class="pre">1</span> <span class="pre">michael</span> <span class="pre">michael</span>&#160;&#160;&#160; <span class="pre">0</span> <span class="pre">nov</span> <span class="pre">26</span> <span class="pre">20:39</span> <span class="pre">binary</span>
-<span class="pre">`</span></code></p>
-<p>Note the output when running the program as another user will show that the c call <cite>geteuid</cite> shows you the
-expected uid of the user who created the file where <cite>id -u</cite> shows you your user id still. To clear this up
-you will want to look at <cite>man geteuid</cite> and note the difference between uid and effective uid. This gist of
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ chmod +x binary
+$ ls -la
+$ ls -la
+total 0
+-rwsrw-r--  1 michael michael    0 nov 26 20:39 binary
+</pre></div>
+</div>
+<p>Note the output when running the program as another user will show that the c call <code class="docutils literal notranslate"><span class="pre">geteuid</span></code> shows you the
+expected uid of the user who created the file where <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">-u</span></code> shows you your user id still. To clear this up
+you will want to look at <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">geteuid</span></code> and note the difference between uid and effective uid. This gist of
 it is that the effective uid decides what permissions you have and the uid is the owner of the process.
-More can be read about this [here](<a class="reference external" href="http://stackoverflow.com/questions/32455684/difference-between-real-user-id-effective-user-id-and-saved-user-id">http://stackoverflow.com/questions/32455684/difference-between-real-user-id-effective-user-id-and-saved-user-id</a>).</p>
+More can be read about this <a class="reference external" href="http://stackoverflow.com/questions/32455684/difference-between-real-user-id-effective-user-id-and-saved-user-id">here</a>.</p>
 <p>To enable you system calls to access the same files you will need to use the setreuid call before calling system.
 Here is an example of using setreuid which would then allow all future system calls to access files on the system
 in the same way as if you were the user who owned the binary.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">if</span> <span class="pre">(setreuid(1000,</span> <span class="pre">1000))</span> <span class="pre">perror(&quot;setuid</span> <span class="pre">reported</span> <span class="pre">failure&quot;);</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">setreuid</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span> <span class="n">perror</span><span class="p">(</span><span class="s2">&quot;setuid reported failure&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
 <p>I won’t go into GUID because it works exactly the same as the above except with group id instead of user.</p>
-<p># Stick Bit</p>
+</div>
+<div class="section" id="stick-bit">
+<span id="stick-bit"></span><h1>Stick Bit<a class="headerlink" href="#stick-bit" title="Permalink to this headline">¶</a></h1>
 <p>The sticky bit is a permission bit that protects the files within a directory. If the directory has the
 sticky bit set, a file can be deleted only by the owner of the file, the owner of the directory, or by root.
 This special permission prevents a user from deleting other users’ files from public directories such as /tmp.</p>
-<p>## Extra</p>
-<ol class="arabic simple">
-<li><a class="reference external" href="http://www.cis.syr.edu/~wedu/Teaching/IntrCompSec/LectureNotes_New/Set_UID.pdf">http://www.cis.syr.edu/~wedu/Teaching/IntrCompSec/LectureNotes_New/Set_UID.pdf</a></li>
-<li><a class="reference external" href="http://stackoverflow.com/questions/24590735/setuid-does-not-work-for-non-root">http://stackoverflow.com/questions/24590735/setuid-does-not-work-for-non-root</a></li>
+<div class="section" id="extra">
+<span id="extra"></span><h2>Extra<a class="headerlink" href="#extra" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li>http://www.cis.syr.edu/~wedu/Teaching/IntrCompSec/LectureNotes_New/Set_UID.pdf</li>
+<li>http://stackoverflow.com/questions/24590735/setuid-does-not-work-for-non-root</li>
 </ol>
+</div>
 </div>
 
 

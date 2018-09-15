@@ -32,60 +32,60 @@
           <div class="body" role="main">
             
   <div class="section" id="ioctl-in-ruby">
-<h1>ioctl in Ruby<a class="headerlink" href="#ioctl-in-ruby" title="Permalink to this headline">¶</a></h1>
+<span id="ioctl-in-ruby"></span><h1>ioctl in Ruby<a class="headerlink" href="#ioctl-in-ruby" title="Permalink to this headline">¶</a></h1>
 <p>I’ll add a more detailed breakdown of this code but for now here it is.</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
-#!/usr/bin/env ruby</p>
-<p>require ‘socket’</p>
-<p>SIOCETHTOOL = 0x8946
-ETHTOOL_GRINGPARAM = 0x00000010
-ETHTOOL_SRINGPARAM = 0x00000011</p>
-<p>sock = UDPSocket.new</p>
-<p># <a class="reference external" href="https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/include/uapi/linux/ethtool.h#L487">https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/include/uapi/linux/ethtool.h#L487</a>
-ringparam_struct = [ETHTOOL_GRINGPARAM].pack “Vx32”
-ifreq = [“enp0s31f6”, ringparam_struct].pack “a16P36”
-sock.ioctl(SIOCETHTOOL, ifreq)</p>
-<dl class="docutils">
-<dt>=begin</dt>
-<dd><p class="first">struct ethtool_ringparam - RX/TX ring parameters
-&#64;cmd: Command number = %ETHTOOL_GRINGPARAM or %ETHTOOL_SRINGPARAM
-&#64;rx_max_pending: Maximum supported number of pending entries per</p>
-<blockquote>
-<div>RX ring.  Read-only.</div></blockquote>
-<dl class="docutils">
-<dt>&#64;rx_mini_max_pending: Maximum supported number of pending entries</dt>
-<dd>per RX mini ring.  Read-only.</dd>
-<dt>&#64;rx_jumbo_max_pending: Maximum supported number of pending entries</dt>
-<dd>per RX jumbo ring.  Read-only.</dd>
-<dt>&#64;tx_max_pending: Maximum supported number of pending entries per</dt>
-<dd>TX ring.  Read-only.</dd>
-</dl>
-<p>&#64;rx_pending: Current maximum number of pending entries per RX ring
-&#64;rx_mini_pending: Current maximum number of pending entries per RX</p>
-<blockquote>
-<div>mini ring</div></blockquote>
-<dl class="last docutils">
-<dt>&#64;rx_jumbo_pending: Current maximum number of pending entries per RX</dt>
-<dd>jumbo ring</dd>
-<dt>&#64;tx_pending: Current maximum supported number of pending entries</dt>
-<dd>per TX ring</dd>
-</dl>
-</dd>
-</dl>
-<p>=end
-rv =  ringparam_struct.unpack “V9”</p>
-<p># pop off the GRINGPARAM cmd from the struct
-_, <a href="#id3"><span class="problematic" id="id4">*</span></a>tail = rv</p>
-<p># To see what is all changable by the user you can read the source code here
-# <a class="reference external" href="https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/drivers/net/ethernet/freescale/gianfar_ethtool.c#L419">https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/drivers/net/ethernet/freescale/gianfar_ethtool.c#L419</a>
-ifreq = tail.insert(0, ETHTOOL_SRINGPARAM)
-ifreq[5] = 512
-ifreq[8] = 512</p>
-<p># Now lets set the data
-ringparam_struct = ifreq.pack “V9”
-ifreq = [“enp0s31f6”, ringparam_struct].pack “a16P36”
-sock.ioctl(SIOCETHTOOL, ifreq)
-<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env ruby</span>
+
+<span class="n">require</span> <span class="s1">&#39;socket&#39;</span>
+
+
+<span class="n">SIOCETHTOOL</span> <span class="o">=</span> <span class="mh">0x8946</span>
+<span class="n">ETHTOOL_GRINGPARAM</span> <span class="o">=</span> <span class="mh">0x00000010</span>
+<span class="n">ETHTOOL_SRINGPARAM</span> <span class="o">=</span> <span class="mh">0x00000011</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">UDPSocket</span><span class="o">.</span><span class="n">new</span>
+
+<span class="c1"># https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/include/uapi/linux/ethtool.h#L487</span>
+<span class="n">ringparam_struct</span> <span class="o">=</span> <span class="p">[</span><span class="n">ETHTOOL_GRINGPARAM</span><span class="p">]</span><span class="o">.</span><span class="n">pack</span> <span class="s2">&quot;Vx32&quot;</span>
+<span class="n">ifreq</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;enp0s31f6&quot;</span><span class="p">,</span> <span class="n">ringparam_struct</span><span class="p">]</span><span class="o">.</span><span class="n">pack</span> <span class="s2">&quot;a16P36&quot;</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">SIOCETHTOOL</span><span class="p">,</span> <span class="n">ifreq</span><span class="p">)</span>
+
+<span class="o">=</span><span class="n">begin</span>
+  <span class="n">struct</span> <span class="n">ethtool_ringparam</span> <span class="o">-</span> <span class="n">RX</span><span class="o">/</span><span class="n">TX</span> <span class="n">ring</span> <span class="n">parameters</span>
+  <span class="nd">@cmd</span><span class="p">:</span> <span class="n">Command</span> <span class="n">number</span> <span class="o">=</span> <span class="o">%</span><span class="n">ETHTOOL_GRINGPARAM</span> <span class="ow">or</span> <span class="o">%</span><span class="n">ETHTOOL_SRINGPARAM</span>
+  <span class="nd">@rx_max_pending</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">supported</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span> <span class="n">per</span>
+       <span class="n">RX</span> <span class="n">ring</span><span class="o">.</span>  <span class="n">Read</span><span class="o">-</span><span class="n">only</span><span class="o">.</span>
+  <span class="nd">@rx_mini_max_pending</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">supported</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span>
+       <span class="n">per</span> <span class="n">RX</span> <span class="n">mini</span> <span class="n">ring</span><span class="o">.</span>  <span class="n">Read</span><span class="o">-</span><span class="n">only</span><span class="o">.</span>
+  <span class="nd">@rx_jumbo_max_pending</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">supported</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span>
+       <span class="n">per</span> <span class="n">RX</span> <span class="n">jumbo</span> <span class="n">ring</span><span class="o">.</span>  <span class="n">Read</span><span class="o">-</span><span class="n">only</span><span class="o">.</span>
+  <span class="nd">@tx_max_pending</span><span class="p">:</span> <span class="n">Maximum</span> <span class="n">supported</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span> <span class="n">per</span>
+       <span class="n">TX</span> <span class="n">ring</span><span class="o">.</span>  <span class="n">Read</span><span class="o">-</span><span class="n">only</span><span class="o">.</span>
+  <span class="nd">@rx_pending</span><span class="p">:</span> <span class="n">Current</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span> <span class="n">per</span> <span class="n">RX</span> <span class="n">ring</span>
+  <span class="nd">@rx_mini_pending</span><span class="p">:</span> <span class="n">Current</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span> <span class="n">per</span> <span class="n">RX</span>
+       <span class="n">mini</span> <span class="n">ring</span>
+  <span class="nd">@rx_jumbo_pending</span><span class="p">:</span> <span class="n">Current</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span> <span class="n">per</span> <span class="n">RX</span>
+       <span class="n">jumbo</span> <span class="n">ring</span>
+  <span class="nd">@tx_pending</span><span class="p">:</span> <span class="n">Current</span> <span class="n">maximum</span> <span class="n">supported</span> <span class="n">number</span> <span class="n">of</span> <span class="n">pending</span> <span class="n">entries</span>
+       <span class="n">per</span> <span class="n">TX</span> <span class="n">ring</span>
+<span class="o">=</span><span class="n">end</span>
+<span class="n">rv</span> <span class="o">=</span>  <span class="n">ringparam_struct</span><span class="o">.</span><span class="n">unpack</span> <span class="s2">&quot;V9&quot;</span>
+
+<span class="c1"># pop off the GRINGPARAM cmd from the struct</span>
+<span class="n">_</span><span class="p">,</span> <span class="o">*</span><span class="n">tail</span> <span class="o">=</span> <span class="n">rv</span>
+
+<span class="c1"># To see what is all changable by the user you can read the source code here</span>
+<span class="c1"># https://github.com/torvalds/linux/blob/9a76aba02a37718242d7cdc294f0a3901928aa57/drivers/net/ethernet/freescale/gianfar_ethtool.c#L419</span>
+<span class="n">ifreq</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ETHTOOL_SRINGPARAM</span><span class="p">)</span>
+<span class="n">ifreq</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">ifreq</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="mi">512</span>
+
+<span class="c1"># Now lets set the data</span>
+<span class="n">ringparam_struct</span> <span class="o">=</span> <span class="n">ifreq</span><span class="o">.</span><span class="n">pack</span> <span class="s2">&quot;V9&quot;</span>
+<span class="n">ifreq</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;enp0s31f6&quot;</span><span class="p">,</span> <span class="n">ringparam_struct</span><span class="p">]</span><span class="o">.</span><span class="n">pack</span> <span class="s2">&quot;a16P36&quot;</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">SIOCETHTOOL</span><span class="p">,</span> <span class="n">ifreq</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
 

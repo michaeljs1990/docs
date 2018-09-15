@@ -19,3 +19,7 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	mv build/html docs
+
+clean:
+	rm -rf $(BUILDDIR)
+	rm -rf docs

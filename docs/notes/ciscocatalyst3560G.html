@@ -32,160 +32,191 @@
           <div class="body" role="main">
             
   <div class="section" id="cisco-catalyst-3560g-config">
-<h1>Cisco Catalyst 3560G Config<a class="headerlink" href="#cisco-catalyst-3560g-config" title="Permalink to this headline">¶</a></h1>
+<span id="cisco-catalyst-3560g-config"></span><h1>Cisco Catalyst 3560G Config<a class="headerlink" href="#cisco-catalyst-3560g-config" title="Permalink to this headline">¶</a></h1>
 <p>This document covers a range of different configurations needed and some not needed for getting my switch working.
 Most of this is likely wrong or has a better way of doing it i’m still learning. I will try and come back and clean
 this up later so I don’t leave crap info sitting around forever.</p>
-<p># Set Cisco Banner (motd)</p>
+</div>
+<div class="section" id="set-cisco-banner-motd">
+<span id="set-cisco-banner-motd"></span><h1>Set Cisco Banner (motd)<a class="headerlink" href="#set-cisco-banner-motd" title="Permalink to this headline">¶</a></h1>
 <p>This will set the banner that is shown when first loggin into your switch.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">enable</span>
-<span class="pre">configure</span> <span class="pre">terminal</span>
-<span class="pre">banner</span> <span class="pre">motd</span> <span class="pre">[</span>
-<span class="pre">end</span>
-<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
-<span class="pre">`</span></code></p>
-<p>You can now type in whatever you want and when you are finished type <cite>[</cite> and press enter.</p>
-<p># Enable LLDP</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">banner</span> <span class="n">motd</span> <span class="p">[</span>
+<span class="n">end</span>
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>You can now type in whatever you want and when you are finished type <code class="docutils literal notranslate"><span class="pre">[</span></code> and press enter.</p>
+</div>
+<div class="section" id="enable-lldp">
+<span id="enable-lldp"></span><h1>Enable LLDP<a class="headerlink" href="#enable-lldp" title="Permalink to this headline">¶</a></h1>
 <p>Enable connected deviced to retrieve attributes about the network. More about LLDP can be seen in the first paragraph
-of this [link](<a class="reference external" href="http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html">http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html</a>).</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">enable</span>
-<span class="pre">configure</span> <span class="pre">terminal</span>
-<span class="pre">lldp</span> <span class="pre">run</span>
-<span class="pre">end</span>
-<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
-<span class="pre">`</span></code></p>
-<p># Set Hostname &amp; DNS</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">enable</span>
-<span class="pre">configure</span> <span class="pre">terminal</span>
-<span class="pre">hostname</span> <span class="pre">&lt;hostname&gt;</span>
-<span class="pre">ip</span> <span class="pre">domain-name</span> <span class="pre">&lt;domain-root&gt;</span>
-<span class="pre">ip</span> <span class="pre">name-server</span> <span class="pre">&lt;ip&gt;</span>
-<span class="pre">end</span>
-<span class="pre">copy</span> <span class="pre">running-config</span> <span class="pre">startup-config</span>
-<span class="pre">`</span></code></p>
-<p>Hostname in my case would be something in the convention of <cite>&lt;switch model&gt;.&lt;rack name&gt;.&lt;pod number&gt;.&lt;datacenter&gt;</cite> this could
-look like <cite>c3650g.tor-a1.pod-01.pit-shd-1</cite> which stands for…</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">c3650g</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">Cisco</span> <span class="pre">3650G</span> <span class="pre">switch</span> <span class="pre">model</span> <span class="pre">not</span> <span class="pre">required</span> <span class="pre">you</span> <span class="pre">may</span> <span class="pre">have</span> <span class="pre">a</span> <span class="pre">better</span> <span class="pre">way</span> <span class="pre">to</span> <span class="pre">dermine</span> <span class="pre">this</span> <span class="pre">in</span> <span class="pre">your</span> <span class="pre">environment</span>
-<span class="pre">tor-a1</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">top</span> <span class="pre">of</span> <span class="pre">rack</span> <span class="pre">switch</span> <span class="pre">called</span> <span class="pre">a1</span> <span class="pre">so</span> <span class="pre">it's</span> <span class="pre">easy</span> <span class="pre">to</span> <span class="pre">locate</span> <span class="pre">inside</span> <span class="pre">the</span> <span class="pre">datacenter</span>
-<span class="pre">pod-01</span>&#160;&#160;&#160; <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">first</span> <span class="pre">pod</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">datacenter</span> <span class="pre">normally</span> <span class="pre">logically</span> <span class="pre">divided</span> <span class="pre">by</span> <span class="pre">OOB</span> <span class="pre">networks</span> <span class="pre">or</span> <span class="pre">IP</span> <span class="pre">space.</span>
-<span class="pre">pit-shd-1</span> <span class="pre">-</span> <span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">datacenter</span> <span class="pre">some</span> <span class="pre">place</span> <span class="pre">in</span> <span class="pre">pittsburgh</span>
-<span class="pre">`</span></code></p>
+of this <a class="reference external" href="http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html">link</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">lldp</span> <span class="n">run</span>
+<span class="n">end</span>
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-hostname-dns">
+<span id="set-hostname-dns"></span><h1>Set Hostname &amp; DNS<a class="headerlink" href="#set-hostname-dns" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">hostname</span> <span class="o">&lt;</span><span class="n">hostname</span><span class="o">&gt;</span>
+<span class="n">ip</span> <span class="n">domain</span><span class="o">-</span><span class="n">name</span> <span class="o">&lt;</span><span class="n">domain</span><span class="o">-</span><span class="n">root</span><span class="o">&gt;</span>
+<span class="n">ip</span> <span class="n">name</span><span class="o">-</span><span class="n">server</span> <span class="o">&lt;</span><span class="n">ip</span><span class="o">&gt;</span>
+<span class="n">end</span>
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>Hostname in my case would be something in the convention of <code class="docutils literal notranslate"><span class="pre">&lt;switch</span> <span class="pre">model&gt;.&lt;rack</span> <span class="pre">name&gt;.&lt;pod</span> <span class="pre">number&gt;.&lt;datacenter&gt;</span></code> this could
+look like <code class="docutils literal notranslate"><span class="pre">c3650g.tor-a1.pod-01.pit-shd-1</span></code> which stands for…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c3650g</span>    <span class="o">-</span> <span class="n">Cisco</span> <span class="mi">3650</span><span class="n">G</span> <span class="n">switch</span> <span class="n">model</span> <span class="ow">not</span> <span class="n">required</span> <span class="n">you</span> <span class="n">may</span> <span class="n">have</span> <span class="n">a</span> <span class="n">better</span> <span class="n">way</span> <span class="n">to</span> <span class="n">dermine</span> <span class="n">this</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">environment</span>
+<span class="n">tor</span><span class="o">-</span><span class="n">a1</span>    <span class="o">-</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">top</span> <span class="n">of</span> <span class="n">rack</span> <span class="n">switch</span> <span class="n">called</span> <span class="n">a1</span> <span class="n">so</span> <span class="n">it</span><span class="s1">&#39;s easy to locate inside the datacenter</span>
+<span class="n">pod</span><span class="o">-</span><span class="mi">01</span>    <span class="o">-</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">first</span> <span class="n">pod</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">datacenter</span> <span class="n">normally</span> <span class="n">logically</span> <span class="n">divided</span> <span class="n">by</span> <span class="n">OOB</span> <span class="n">networks</span> <span class="ow">or</span> <span class="n">IP</span> <span class="n">space</span><span class="o">.</span>
+<span class="n">pit</span><span class="o">-</span><span class="n">shd</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">datacenter</span> <span class="n">some</span> <span class="n">place</span> <span class="ow">in</span> <span class="n">pittsburgh</span>
+</pre></div>
+</div>
 <p>The domain-name is something like website.com if you happened to own that domain and used it for all of the computers located
 inside this facility. You will likely have a dedicated DNS server that serves this domain name in your datacenter.</p>
 <p>The name-server is just the ip, hopefully you can enter more than one although i’m not sure how that configuration would look
 at this time since I only have one setup for testing.</p>
-<p># Setup SSH</p>
+</div>
+<div class="section" id="setup-ssh">
+<span id="setup-ssh"></span><h1>Setup SSH<a class="headerlink" href="#setup-ssh" title="Permalink to this headline">¶</a></h1>
 <p>Before you start make sure you have done all configuration in the “Set Hostname &amp; DNS” section.</p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
-enable
-configure terminal
-crypto key generate rsa
-end</p>
-<p>configure terminal
-line vty 0 4
-transport input ssh
-login local
-exit</p>
-<p>configure terminal
-username &lt;username&gt; password &lt;password&gt;</p>
-<p>copy running-config startup-config
-<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">crypto</span> <span class="n">key</span> <span class="n">generate</span> <span class="n">rsa</span>
+<span class="n">end</span>
+
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">line</span> <span class="n">vty</span> <span class="mi">0</span> <span class="mi">4</span>
+<span class="n">transport</span> <span class="nb">input</span> <span class="n">ssh</span>
+<span class="n">login</span> <span class="n">local</span>
+<span class="n">exit</span>
+
+<span class="n">configure</span> <span class="n">terminal</span>
+<span class="n">username</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="n">password</span> <span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;</span>
+
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
 <p>You should now be able to log in with the username and password you have set. You can set multiple accounts as well. I imagine
 you can obtain the private key as well and use that but haven’t looked into it yet. To see what your current settings are you
 can run the following two commands.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">show</span> <span class="pre">ip</span> <span class="pre">ssh</span>
-<span class="pre">show</span> <span class="pre">ssh</span>
-<span class="pre">`</span></code></p>
-<p># List interfaces</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">ip</span> <span class="n">ssh</span>
+<span class="n">show</span> <span class="n">ssh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-interfaces">
+<span id="list-interfaces"></span><h1>List interfaces<a class="headerlink" href="#list-interfaces" title="Permalink to this headline">¶</a></h1>
 <p>Not much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
 instead of whatever the true interface speed is.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">show</span> <span class="pre">interfaces</span> <span class="pre">status</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">interfaces</span> <span class="n">status</span>
+</pre></div>
+</div>
 <p>If you want to filter for connected only interfaces on devices with a large number of ports..</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">show</span> <span class="pre">interfaces</span> <span class="pre">status</span> <span class="pre">|</span> <span class="pre">include</span> <span class="pre">connected</span>
-<span class="pre">`</span></code></p>
-<p># VLANs</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">interfaces</span> <span class="n">status</span> <span class="o">|</span> <span class="n">include</span> <span class="n">connected</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vlans">
+<span id="vlans"></span><h1>VLANs<a class="headerlink" href="#vlans" title="Permalink to this headline">¶</a></h1>
 <p>General overview of working with VLAN for noobs like me.</p>
 <p>To get an overview of the current/default VLANs on your switch and the ports connected to them run</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">show</span> <span class="pre">vlan</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">vlan</span>
+</pre></div>
+</div>
 <p>To create a new VLAN run the following commands on your switch. VLAN 2 is used in this example
-but you can use any VLAN that you wish. Some things to note is that <cite>no shutdown</cite> is used to
+but you can use any VLAN that you wish. Some things to note is that <code class="docutils literal notranslate"><span class="pre">no</span> <span class="pre">shutdown</span></code> is used to
 bring the interface up since by default it is set to down. The default-gateway is not needed
 however I explicitly state it here in case you want to use a different gateway for the specific
 VLAN than the one used for all interfaces on the router.</p>
-<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
-enable
-configure terminal</p>
-<p>vlan 2
-name ToR
-exit</p>
-<p>interface Vlan 2
-ip address 10.0.0.1 255.255.255.0
-no shutdown
-exit
-enable
-configure terminal</p>
-<p>interface GigabitEthernet 0/33
-switchport access vlan 2
-exit</p>
-<p>copy running-config startup-config
-<a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
-<p>If you did everything correct the Vlan you configured should say <cite>Vlan2 is up, line protocol is up</cite>
-when you check the output of <cite>show interfaces</cite>. <cite>show interfaces brief</cite> should list all ports using
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+
+<span class="n">vlan</span> <span class="mi">2</span>
+<span class="n">name</span> <span class="n">ToR</span>
+<span class="n">exit</span>
+
+<span class="n">interface</span> <span class="n">Vlan</span> <span class="mi">2</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="n">no</span> <span class="n">shutdown</span>
+<span class="n">exit</span>
+<span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">33</span>
+<span class="n">switchport</span> <span class="n">access</span> <span class="n">vlan</span> <span class="mi">2</span>
+<span class="n">exit</span>
+
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>If you did everything correct the Vlan you configured should say <code class="docutils literal notranslate"><span class="pre">Vlan2</span> <span class="pre">is</span> <span class="pre">up,</span> <span class="pre">line</span> <span class="pre">protocol</span> <span class="pre">is</span> <span class="pre">up</span></code>
+when you check the output of <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">interfaces</span></code>. <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">interfaces</span> <span class="pre">brief</span></code> should list all ports using
 the new VLAN as well.</p>
-<p>To test you can use the cisco ping command <cite>ping 192.168.1.1 source 10.0.0.1</cite> to ensure that your
+<p>To test you can use the cisco ping command <code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">192.168.1.1</span> <span class="pre">source</span> <span class="pre">10.0.0.1</span></code> to ensure that your
 routing is setup properly.</p>
 <p>Note you will still have to setup a static route so that in this case the router handling
-<cite>192.168.1.1</cite> which in my case is a static route 10.0.0.1 -&gt; 192.168.1.8 where 192.168.1.8
+<code class="docutils literal notranslate"><span class="pre">192.168.1.1</span></code> which in my case is a static route 10.0.0.1 -&gt; 192.168.1.8 where 192.168.1.8
 is the ip for VLAN 1 on my switch.</p>
-<p># Configure DHCP</p>
+</div>
+<div class="section" id="configure-dhcp">
+<span id="configure-dhcp"></span><h1>Configure DHCP<a class="headerlink" href="#configure-dhcp" title="Permalink to this headline">¶</a></h1>
 <p>Very similiar to the steps for settingup up vlans for the most part you can configure your switch
 port to use DHCP to get it’s IP address.</p>
-<p><a href="#id13"><span class="problematic" id="id14">``</span></a>`
-enable
-configure terminal</p>
-<p>interface GigabitEthernet 0/1
-ip address dhcp
-exit</p>
-<p>copy running-config startup-config
-<a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="n">dhcp</span>
+<span class="n">exit</span>
+
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
 <p>This will allow you to let an upstream router acting as the DHCP set your IP instead of having to change it by hand
 when you need to make changes to your router.</p>
-<p># DHCP Forwarding</p>
+</div>
+<div class="section" id="dhcp-forwarding">
+<span id="dhcp-forwarding"></span><h1>DHCP Forwarding<a class="headerlink" href="#dhcp-forwarding" title="Permalink to this headline">¶</a></h1>
 <p>If you have a DHCP server on another broadcast domain you can set the DHCP server the ToR switch
-should forward to using the following. In this example 192.168.1.5 is my DHCP server.
-<a href="#id19"><span class="problematic" id="id20">``</span></a>`
-enable
-configure terminal</p>
-<p>interface Vlan 2
-ip helper-address 192.168.1.5
-exit</p>
-<p>copy running-config startup-config
-<a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
-<p># Random</p>
+should forward to using the following. In this example 192.168.1.5 is my DHCP server.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
+<span class="n">configure</span> <span class="n">terminal</span>
+
+<span class="n">interface</span> <span class="n">Vlan</span> <span class="mi">2</span>
+<span class="n">ip</span> <span class="n">helper</span><span class="o">-</span><span class="n">address</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.5</span>
+<span class="n">exit</span>
+
+<span class="n">copy</span> <span class="n">running</span><span class="o">-</span><span class="n">config</span> <span class="n">startup</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="random">
+<span id="random"></span><h1>Random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h1>
 <p>To stop Cisco from trying to do a dns lookup when you type in an invalid command
 you can issue the following.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">no</span> <span class="pre">ip</span> <span class="pre">domain</span> <span class="pre">lookup</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">no</span> <span class="n">ip</span> <span class="n">domain</span> <span class="n">lookup</span>
+</pre></div>
+</div>
 <p>If you would like to not be blasted with logging while you are typing..</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">no</span> <span class="pre">logging</span> <span class="pre">console</span>
-<span class="pre">`</span></code></p>
-<p># Get System Temp Info</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">no</span> <span class="n">logging</span> <span class="n">console</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-system-temp-info">
+<span id="get-system-temp-info"></span><h1>Get System Temp Info<a class="headerlink" href="#get-system-temp-info" title="Permalink to this headline">¶</a></h1>
 <p>If you are looking for info on if your system is overheating you can use</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">show</span> <span class="pre">env</span> <span class="pre">all</span>
-<span class="pre">`</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">env</span> <span class="nb">all</span>
+</pre></div>
+</div>
 <p>To return information about the temp, system fan, and temp thresholds.</p>
 </div>
 

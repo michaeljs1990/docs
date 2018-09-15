@@ -8,7 +8,8 @@ Welcome to Bookmarks's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   notes/ruby/ioctl.md
 
 
 
