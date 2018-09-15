@@ -15,6 +15,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cisco Catalyst 3560G Config" href="notes/ciscocatalyst3560G.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -31,22 +32,102 @@
 
           <div class="body" role="main">
             
-  <p>.. Bookmarks documentation master file, created by
-sphinx-quickstart on Tue Sep 11 01:09:07 2018.
-You can adapt this file completely to your liking, but it should at least
-contain the root <code class="docutils literal notranslate"><span class="pre">toctree</span></code> directive.</p>
-<div class="section" id="welcome-to-bookmarks-s-documentation">
-<span id="welcome-to-bookmarks-s-documentation"></span><h1>Welcome to Bookmarks’s documentation!<a class="headerlink" href="#welcome-to-bookmarks-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>.. toctree::
-:maxdepth: 2</p>
-<p>notes/ruby/ioctl.md</p>
+  <div class="section" id="welcome-to-bookmarks-s-documentation">
+<h1>Welcome to Bookmarks’s documentation!<a class="headerlink" href="#welcome-to-bookmarks-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html">Cisco Catalyst 3560G Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#enable-lldp">Enable LLDP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#set-hostname-dns">Set Hostname &amp; DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#setup-ssh">Setup SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#list-interfaces">List interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#vlans">VLANs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#dhcp-forwarding">DHCP Forwarding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#random">Random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#get-system-temp-info">Get System Temp Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/collins.html">Collins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/collins.html#creating-a-node-classifier">Creating a node classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/djbdns.html">djbdns (How to setup your own DNS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/mooltipass.html">Mooltipass</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/mooltipass.html#ssh-agent">SSH Agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/mooltipass.html#backups">Backups</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html">SUID/GUID Quirks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html#suid-guid-example">SUID/GUID Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html#stick-bit">Stick Bit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/stickybits.html#extra">Extra</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ruby/ioctl.html">ioctl in Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/1.html">Scala Core Functions Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#variables">variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#case-statements">case statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#map-def-map-b-f-a-b-map-b">map def map[B](f: (A) ⇒ B): Map[B]</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#flatmap">flatMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#flatmap-vs-map">flatMap vs map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#foldleft">foldLeft</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#fold">fold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#aggregate">aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#reduce">reduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/1.html#groupby">groupBy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/k-means.html">K-Means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/sbt.html">SBT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/sbt.html#starting-a-console">Starting a console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/sbt.html#run-individual-tests">Run individual tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/spark.html">Spark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#config">Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#rdds">RDDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#pair-rdds">Pair RDDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#rdds-and-joins">RDDs and Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#shuffling">Shuffling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#partitioning">Partitioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#caching">Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes/scala/spark.html#debug-workflow">Debug Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src/Cisco.html">Cisco</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src/Cisco.html#network-vulnerabilities">Network Vulnerabilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src/Dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Dependencies.html#debian">Debian</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Distributed_Systems.html">Distributed Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Distributed_Systems.html#op-ed-s">Op-ed’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html">Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html#stats-api">Stats API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html#monitoring">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Languages.html">Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#kernel-internals">Kernel Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#ipmi">IPMI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#networking">Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#perf-tuning">Perf Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Michael.html">Michael</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/OS.html">OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/OS.html#courses">Courses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Philosophy.html">Philosophy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Ruby.html">Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Ruby.html#educational">Educational</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html#rowhammer">Rowhammer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html#vpn">VPN</a></li>
+</ul>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
-<span id="indices-and-tables"></span><h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>:ref:<code class="docutils literal notranslate"><span class="pre">genindex</span></code></li>
-<li>:ref:<code class="docutils literal notranslate"><span class="pre">modindex</span></code></li>
-<li>:ref:<code class="docutils literal notranslate"><span class="pre">search</span></code></li>
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
 </div>
 
@@ -67,11 +148,60 @@ contain the root <code class="docutils literal notranslate"><span class="pre">to
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html">Cisco Catalyst 3560G Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#enable-lldp">Enable LLDP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#set-hostname-dns">Set Hostname &amp; DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#setup-ssh">Setup SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#list-interfaces">List interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#vlans">VLANs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#dhcp-forwarding">DHCP Forwarding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#random">Random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ciscocatalyst3560G.html#get-system-temp-info">Get System Temp Info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/collins.html">Collins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/collins.html#creating-a-node-classifier">Creating a node classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/djbdns.html">djbdns (How to setup your own DNS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/mooltipass.html">Mooltipass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html">SUID/GUID Quirks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html#suid-guid-example">SUID/GUID Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/stickybits.html#stick-bit">Stick Bit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/ruby/ioctl.html">ioctl in Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/1.html">Scala Core Functions Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/k-means.html">K-Means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/sbt.html">SBT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notes/scala/spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Cisco.html">Cisco</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Dependencies.html">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Dependencies.html#debian">Debian</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Distributed_Systems.html">Distributed Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Distributed_Systems.html#op-ed-s">Op-ed’s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html">Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html#stats-api">Stats API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Docker.html#monitoring">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Languages.html">Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#kernel-internals">Kernel Internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#ipmi">IPMI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#networking">Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Linux.html#perf-tuning">Perf Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Michael.html">Michael</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/OS.html">OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/OS.html#courses">Courses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Philosophy.html">Philosophy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Ruby.html">Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Ruby.html#educational">Educational</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html#rowhammer">Rowhammer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="src/Security.html#vpn">VPN</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="notes/ciscocatalyst3560G.html" title="next chapter">Cisco Catalyst 3560G Config</a></li>
   </ul></li>
 </ul>
 </div>
@@ -99,7 +229,7 @@ contain the root <code class="docutils literal notranslate"><span class="pre">to
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
-      <a href="_sources/index.md.txt"
+      <a href="_sources/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

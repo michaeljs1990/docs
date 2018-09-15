@@ -7,9 +7,13 @@ Welcome to Bookmarks's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
+   :glob:
 
-   notes/ruby/ioctl.md
+   notes/*
+   notes/ruby/*
+   notes/scala/*
+   src/*
 
 
 

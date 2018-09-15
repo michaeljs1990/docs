@@ -49,7 +49,7 @@ templates_path = ['.templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ['.md']
+source_suffix = ['.md', '.rst']
 
 # Support for markup
 source_parsers = {
