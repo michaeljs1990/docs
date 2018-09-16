@@ -11,10 +11,3 @@ Networking
 
    ciscocatalyst3560G
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
