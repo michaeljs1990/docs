@@ -12,6 +12,7 @@ Programming & Sysadmin Stuff
    linux/index
    networking/index
    ruby/index
+   software/index
 
 Indices and tables
 ==================

@@ -3,20 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Programming & Sysadmin Stuff
+Random Software
 ============================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   linux/index
-   networking/index
-   ruby/index
-   software/index
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   wireguard
+   mooltipass
