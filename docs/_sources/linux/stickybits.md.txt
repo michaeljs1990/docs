@@ -82,7 +82,7 @@ if (setreuid(1000, 1000)) perror("setuid reported failure");
 
 I won't go into GUID because it works exactly the same as the above except with group id instead of user.
 
-# Stick Bit
+## Stick Bit
 
 The sticky bit is a permission bit that protects the files within a directory. If the directory has the 
 sticky bit set, a file can be deleted only by the owner of the file, the owner of the directory, or by root.

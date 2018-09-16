@@ -86,17 +86,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/index.html#indices-and-tables">Indices and tables</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Networking</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Cisco Catalyst 3560G Config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#enable-lldp">Enable LLDP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-hostname-dns">Set Hostname &amp; DNS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setup-ssh">Setup SSH</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-interfaces">List interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#vlans">VLANs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configure-dhcp">Configure DHCP</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dhcp-forwarding">DHCP Forwarding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#random">Random</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#get-system-temp-info">Get System Temp Info</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cisco Catalyst 3560G Config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enable-lldp">Enable LLDP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-hostname-dns">Set Hostname &amp; DNS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-ssh">Setup SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-interfaces">List interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vlans">VLANs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dhcp-forwarding">DHCP Forwarding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#random">Random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-system-temp-info">Get System Temp Info</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
@@ -173,9 +175,8 @@
 <p>This document covers a range of different configurations needed and some not needed for getting my switch working.
 Most of this is likely wrong or has a better way of doing it i’m still learning. I will try and come back and clean
 this up later so I don’t leave crap info sitting around forever.</p>
-</div>
 <div class="section" id="set-cisco-banner-motd">
-<span id="set-cisco-banner-motd"></span><h1>Set Cisco Banner (motd)<a class="headerlink" href="#set-cisco-banner-motd" title="Permalink to this headline">¶</a></h1>
+<span id="set-cisco-banner-motd"></span><h2>Set Cisco Banner (motd)<a class="headerlink" href="#set-cisco-banner-motd" title="Permalink to this headline">¶</a></h2>
 <p>This will set the banner that is shown when first loggin into your switch.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
 <span class="n">configure</span> <span class="n">terminal</span>
@@ -187,7 +188,7 @@ this up later so I don’t leave crap info sitting around forever.</p>
 <p>You can now type in whatever you want and when you are finished type <code class="docutils literal notranslate"><span class="pre">[</span></code> and press enter.</p>
 </div>
 <div class="section" id="enable-lldp">
-<span id="enable-lldp"></span><h1>Enable LLDP<a class="headerlink" href="#enable-lldp" title="Permalink to this headline">¶</a></h1>
+<span id="enable-lldp"></span><h2>Enable LLDP<a class="headerlink" href="#enable-lldp" title="Permalink to this headline">¶</a></h2>
 <p>Enable connected deviced to retrieve attributes about the network. More about LLDP can be seen in the first paragraph
 of this <a class="reference external" href="http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html">link</a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
@@ -199,7 +200,7 @@ of this <a class="reference external" href="http://www.cisco.com/c/en/us/td/docs
 </div>
 </div>
 <div class="section" id="set-hostname-dns">
-<span id="set-hostname-dns"></span><h1>Set Hostname &amp; DNS<a class="headerlink" href="#set-hostname-dns" title="Permalink to this headline">¶</a></h1>
+<span id="set-hostname-dns"></span><h2>Set Hostname &amp; DNS<a class="headerlink" href="#set-hostname-dns" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
 <span class="n">configure</span> <span class="n">terminal</span>
 <span class="n">hostname</span> <span class="o">&lt;</span><span class="n">hostname</span><span class="o">&gt;</span>
@@ -223,7 +224,7 @@ inside this facility. You will likely have a dedicated DNS server that serves th
 at this time since I only have one setup for testing.</p>
 </div>
 <div class="section" id="setup-ssh">
-<span id="setup-ssh"></span><h1>Setup SSH<a class="headerlink" href="#setup-ssh" title="Permalink to this headline">¶</a></h1>
+<span id="setup-ssh"></span><h2>Setup SSH<a class="headerlink" href="#setup-ssh" title="Permalink to this headline">¶</a></h2>
 <p>Before you start make sure you have done all configuration in the “Set Hostname &amp; DNS” section.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
 <span class="n">configure</span> <span class="n">terminal</span>
@@ -251,7 +252,7 @@ can run the following two commands.</p>
 </div>
 </div>
 <div class="section" id="list-interfaces">
-<span id="list-interfaces"></span><h1>List interfaces<a class="headerlink" href="#list-interfaces" title="Permalink to this headline">¶</a></h1>
+<span id="list-interfaces"></span><h2>List interfaces<a class="headerlink" href="#list-interfaces" title="Permalink to this headline">¶</a></h2>
 <p>Not much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
 instead of whatever the true interface speed is.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">interfaces</span> <span class="n">status</span>
@@ -263,7 +264,7 @@ instead of whatever the true interface speed is.</p>
 </div>
 </div>
 <div class="section" id="vlans">
-<span id="vlans"></span><h1>VLANs<a class="headerlink" href="#vlans" title="Permalink to this headline">¶</a></h1>
+<span id="vlans"></span><h2>VLANs<a class="headerlink" href="#vlans" title="Permalink to this headline">¶</a></h2>
 <p>General overview of working with VLAN for noobs like me.</p>
 <p>To get an overview of the current/default VLANs on your switch and the ports connected to them run</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">vlan</span>
@@ -305,7 +306,7 @@ routing is setup properly.</p>
 is the ip for VLAN 1 on my switch.</p>
 </div>
 <div class="section" id="configure-dhcp">
-<span id="configure-dhcp"></span><h1>Configure DHCP<a class="headerlink" href="#configure-dhcp" title="Permalink to this headline">¶</a></h1>
+<span id="configure-dhcp"></span><h2>Configure DHCP<a class="headerlink" href="#configure-dhcp" title="Permalink to this headline">¶</a></h2>
 <p>Very similiar to the steps for settingup up vlans for the most part you can configure your switch
 port to use DHCP to get it’s IP address.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
@@ -322,7 +323,7 @@ port to use DHCP to get it’s IP address.</p>
 when you need to make changes to your router.</p>
 </div>
 <div class="section" id="dhcp-forwarding">
-<span id="dhcp-forwarding"></span><h1>DHCP Forwarding<a class="headerlink" href="#dhcp-forwarding" title="Permalink to this headline">¶</a></h1>
+<span id="dhcp-forwarding"></span><h2>DHCP Forwarding<a class="headerlink" href="#dhcp-forwarding" title="Permalink to this headline">¶</a></h2>
 <p>If you have a DHCP server on another broadcast domain you can set the DHCP server the ToR switch
 should forward to using the following. In this example 192.168.1.5 is my DHCP server.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable</span>
@@ -337,7 +338,7 @@ should forward to using the following. In this example 192.168.1.5 is my DHCP se
 </div>
 </div>
 <div class="section" id="random">
-<span id="random"></span><h1>Random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h1>
+<span id="random"></span><h2>Random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h2>
 <p>To stop Cisco from trying to do a dns lookup when you type in an invalid command
 you can issue the following.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">no</span> <span class="n">ip</span> <span class="n">domain</span> <span class="n">lookup</span>
@@ -349,12 +350,13 @@ you can issue the following.</p>
 </div>
 </div>
 <div class="section" id="get-system-temp-info">
-<span id="get-system-temp-info"></span><h1>Get System Temp Info<a class="headerlink" href="#get-system-temp-info" title="Permalink to this headline">¶</a></h1>
+<span id="get-system-temp-info"></span><h2>Get System Temp Info<a class="headerlink" href="#get-system-temp-info" title="Permalink to this headline">¶</a></h2>
 <p>If you are looking for info on if your system is overheating you can use</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">env</span> <span class="nb">all</span>
 </pre></div>
 </div>
 <p>To return information about the temp, system fan, and temp thresholds.</p>
+</div>
 </div>
 
 

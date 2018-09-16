@@ -87,9 +87,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SUID/GUID Tutorial</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#suid-guid-quirks">SUID/GUID Quirks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#suid-guid-example">SUID/GUID Example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#stick-bit">Stick Bit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stick-bit">Stick Bit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extra">Extra</a></li>
 </ul>
 </li>
@@ -235,12 +233,12 @@ in the same way as if you were the user who owned the binary.</p>
 </div>
 <p>I won’t go into GUID because it works exactly the same as the above except with group id instead of user.</p>
 </div>
-</div>
 <div class="section" id="stick-bit">
-<span id="stick-bit"></span><h1>Stick Bit<a class="headerlink" href="#stick-bit" title="Permalink to this headline">¶</a></h1>
+<span id="stick-bit"></span><h2>Stick Bit<a class="headerlink" href="#stick-bit" title="Permalink to this headline">¶</a></h2>
 <p>The sticky bit is a permission bit that protects the files within a directory. If the directory has the
 sticky bit set, a file can be deleted only by the owner of the file, the owner of the directory, or by root.
 This special permission prevents a user from deleting other users’ files from public directories such as /tmp.</p>
+</div>
 <div class="section" id="extra">
 <span id="extra"></span><h2>Extra<a class="headerlink" href="#extra" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">

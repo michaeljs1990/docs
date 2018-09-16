@@ -5,7 +5,7 @@ This document covers a range of different configurations needed and some not nee
 Most of this is likely wrong or has a better way of doing it i'm still learning. I will try and come back and clean
 this up later so I don't leave crap info sitting around forever.
 
-# Set Cisco Banner (motd)
+## Set Cisco Banner (motd)
 
 This will set the banner that is shown when first loggin into your switch.
 
@@ -19,7 +19,7 @@ copy running-config startup-config
 
 You can now type in whatever you want and when you are finished type `[` and press enter.
 
-# Enable LLDP
+## Enable LLDP
 
 Enable connected deviced to retrieve attributes about the network. More about LLDP can be seen in the first paragraph
 of this [link](http://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swlldp.html).
@@ -32,7 +32,7 @@ end
 copy running-config startup-config
 ```
 
-# Set Hostname & DNS
+## Set Hostname & DNS
 
 ```
 enable
@@ -60,7 +60,7 @@ inside this facility. You will likely have a dedicated DNS server that serves th
 The name-server is just the ip, hopefully you can enter more than one although i'm not sure how that configuration would look
 at this time since I only have one setup for testing.
 
-# Setup SSH
+## Setup SSH
 
 Before you start make sure you have done all configuration in the "Set Hostname & DNS" section.
 
@@ -91,7 +91,7 @@ show ip ssh
 show ssh
 ```
 
-# List interfaces
+## List interfaces
 
 Not much going on here outside of remembering that if the node connected to the interface is offline it will report as a-100
 instead of whatever the true interface speed is.
@@ -106,7 +106,7 @@ If you want to filter for connected only interfaces on devices with a large numb
 show interfaces status | include connected
 ```
 
-# VLANs
+## VLANs
 
 General overview of working with VLAN for noobs like me.
 
@@ -155,7 +155,7 @@ Note you will still have to setup a static route so that in this case the router
 `192.168.1.1` which in my case is a static route 10.0.0.1 -> 192.168.1.8 where 192.168.1.8
 is the ip for VLAN 1 on my switch.
 
-# Configure DHCP 
+## Configure DHCP 
 
 Very similiar to the steps for settingup up vlans for the most part you can configure your switch
 port to use DHCP to get it's IP address.
@@ -174,7 +174,7 @@ copy running-config startup-config
 This will allow you to let an upstream router acting as the DHCP set your IP instead of having to change it by hand
 when you need to make changes to your router.
 
-# DHCP Forwarding 
+## DHCP Forwarding 
 
 If you have a DHCP server on another broadcast domain you can set the DHCP server the ToR switch
 should forward to using the following. In this example 192.168.1.5 is my DHCP server.
@@ -189,7 +189,7 @@ exit
 copy running-config startup-config
 ```
 
-# Random
+## Random
 
 To stop Cisco from trying to do a dns lookup when you type in an invalid command
 you can issue the following.
@@ -204,7 +204,7 @@ If you would like to not be blasted with logging while you are typing..
 no logging console
 ```
 
-# Get System Temp Info
+## Get System Temp Info
 
 If you are looking for info on if your system is overheating you can use
 
