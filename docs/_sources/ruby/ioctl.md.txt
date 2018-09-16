@@ -1,7 +1,15 @@
 ioctl in Ruby
 =============
 
-I'll add a more detailed breakdown of this code but for now here it is.
+I previously needed to tune the ring buffers on some server that I had and found that I needed to
+install ethtool in order to read and set these values. At least if you are just going off what info
+you will find online when you Google for how to do this. I figured you have to be able to do this in
+a much easier way that doesn't add any dependencies for me since I already have ruby on all my systems.
+Additionally I imagine this is easy to do in any language such as Python which is default on almost all 
+linux OS now days.
+
+The following script is what I came up with. I have broken this down line by line below for those who
+may be unfamiliar with ioctl, ruby, or c.
 
 ```
 #!/usr/bin/env ruby

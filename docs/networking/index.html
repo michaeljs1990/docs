@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Links &mdash; Bookmarks rc documentation</title>
+  <title>Networking &mdash; Bookmarks rc documentation</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cisco Catalyst 3560G Config" href="ciscocatalyst3560G.html" />
+    <link rel="prev" title="SUID/GUID Tutorial" href="../linux/stickybits.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,11 +82,24 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../linux/index.html#indices-and-tables">Indices and tables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../networking/index.html">Networking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../networking/index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Networking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html">Cisco Catalyst 3560G Config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#enable-lldp">Enable LLDP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#set-hostname-dns">Set Hostname &amp; DNS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#setup-ssh">Setup SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#list-interfaces">List interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#vlans">VLANs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#dhcp-forwarding">DHCP Forwarding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#random">Random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html#get-system-temp-info">Get System Temp Info</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ruby/index.html">Ruby</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ruby/index.html#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -132,13 +147,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Links</li>
+      <li>Networking</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/src/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/networking/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -151,36 +166,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="links">
-<h1>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="networking">
+<h1>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Cisco.html">Cisco</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Cisco.html#network-vulnerabilities">Network Vulnerabilities</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Dependencies.html">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Dependencies.html#debian">Debian</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Distributed_Systems.html">Distributed Systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Distributed_Systems.html#op-ed-s">Op-ed’s</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Docker.html">Docker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Docker.html#stats-api">Stats API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Docker.html#monitoring">Monitoring</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Languages.html">Languages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux.html#kernel-internals">Kernel Internals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux.html#ipmi">IPMI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux.html#networking">Networking</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux.html#perf-tuning">Perf Tuning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Michael.html">Michael</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OS.html">OS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OS.html#courses">Courses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Philosophy.html">Philosophy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Ruby.html">Ruby</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Ruby.html#educational">Educational</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Security.html#rowhammer">Rowhammer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Security.html#vpn">VPN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html">Cisco Catalyst 3560G Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#set-cisco-banner-motd">Set Cisco Banner (motd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#enable-lldp">Enable LLDP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#set-hostname-dns">Set Hostname &amp; DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#setup-ssh">Setup SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#list-interfaces">List interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#vlans">VLANs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#configure-dhcp">Configure DHCP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#dhcp-forwarding">DHCP Forwarding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#random">Random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ciscocatalyst3560G.html#get-system-temp-info">Get System Temp Info</a></li>
 </ul>
 </div>
 </div>
@@ -198,6 +198,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ciscocatalyst3560G.html" class="btn btn-neutral float-right" title="Cisco Catalyst 3560G Config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../linux/stickybits.html" class="btn btn-neutral" title="SUID/GUID Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

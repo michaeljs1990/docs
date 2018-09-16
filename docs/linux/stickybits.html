@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SUID/GUID Quirks &mdash; Bookmarks rc documentation</title>
+  <title>SUID/GUID Tutorial &mdash; Bookmarks rc documentation</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Networking" href="../networking/index.html" />
+    <link rel="prev" title="Linux" href="index.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,7 +82,22 @@
               
             
             
-              <ul>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Linux</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SUID/GUID Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#suid-guid-quirks">SUID/GUID Quirks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#suid-guid-example">SUID/GUID Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stick-bit">Stick Bit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extra">Extra</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/index.html">Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/index.html#indices-and-tables">Indices and tables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ruby/index.html">Ruby</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ruby/index.html#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -128,7 +145,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>SUID/GUID Quirks</li>
+          <li><a href="index.html">Linux</a> &raquo;</li>
+        
+      <li>SUID/GUID Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,9 +166,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>Inspired by https://twitter.com/b0rk/status/801233053699940352</p>
+  <div class="section" id="suid-guid-tutorial">
+<span id="suid-guid-tutorial"></span><h1>SUID/GUID Tutorial<a class="headerlink" href="#suid-guid-tutorial" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="suid-guid-quirks">
-<span id="suid-guid-quirks"></span><h1>SUID/GUID Quirks<a class="headerlink" href="#suid-guid-quirks" title="Permalink to this headline">¶</a></h1>
+<span id="suid-guid-quirks"></span><h2>SUID/GUID Quirks<a class="headerlink" href="#suid-guid-quirks" title="Permalink to this headline">¶</a></h2>
+<p>This was inspired by https://twitter.com/b0rk/status/801233053699940352</p>
 <p>This will cover some of the quirks of linux file permissions that I often forget.</p>
 <p>First note that if you are trying to use SUID or GUID on a filesystem you need to check if nosuid is set. You can easily test
 for this by running <code class="docutils literal notranslate"><span class="pre">mount</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">/filesystem</span></code> which will show all the mount params for the given filesystem. If you see
@@ -164,7 +185,7 @@ nosuid in this list using the suid and guid bits will be ignored. Here is an exc
 can be seen <a class="reference external" href="http://unix.stackexchange.com/questions/130906/why-does-setuid-not-work">here</a>.</p>
 </div>
 <div class="section" id="suid-guid-example">
-<span id="suid-guid-example"></span><h1>SUID/GUID Example<a class="headerlink" href="#suid-guid-example" title="Permalink to this headline">¶</a></h1>
+<span id="suid-guid-example"></span><h2>SUID/GUID Example<a class="headerlink" href="#suid-guid-example" title="Permalink to this headline">¶</a></h2>
 <p>SUID/GUID bits allow you to set the user or group that the program will be run as regardless of the user who executes the program.
 More history on it can be found <a class="reference external" href="http://www.thegeekstuff.com/2013/02/sticky-bit/">here</a>.</p>
 <p>The following will create a file that has the setUID bit set however since this only sets the setUID bit and
@@ -214,6 +235,7 @@ in the same way as if you were the user who owned the binary.</p>
 </div>
 <p>I won’t go into GUID because it works exactly the same as the above except with group id instead of user.</p>
 </div>
+</div>
 <div class="section" id="stick-bit">
 <span id="stick-bit"></span><h1>Stick Bit<a class="headerlink" href="#stick-bit" title="Permalink to this headline">¶</a></h1>
 <p>The sticky bit is a permission bit that protects the files within a directory. If the directory has the
@@ -233,6 +255,15 @@ This special permission prevents a user from deleting other users’ files from 
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../networking/index.html" class="btn btn-neutral float-right" title="Networking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

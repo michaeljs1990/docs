@@ -9,9 +9,9 @@ Programming & Sysadmin Stuff
 .. toctree::
    :maxdepth: 2
 
+   linux/index
+   networking/index
    ruby/index
-
-
 
 Indices and tables
 ==================

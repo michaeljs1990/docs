@@ -1,6 +1,8 @@
-Inspired by https://twitter.com/b0rk/status/801233053699940352
+# SUID/GUID Tutorial
 
-# SUID/GUID Quirks
+## SUID/GUID Quirks
+
+This was inspired by https://twitter.com/b0rk/status/801233053699940352
 
 This will cover some of the quirks of linux file permissions that I often forget.
 
@@ -18,7 +20,7 @@ Do not allow set-user-identifier or set-group-identifier bits to take effect.
 Another thing to note is that only binary files properly use SUID/GUID bits for security reasons. More on this
 can be seen [here](http://unix.stackexchange.com/questions/130906/why-does-setuid-not-work).
 
-# SUID/GUID Example
+## SUID/GUID Example
 
 SUID/GUID bits allow you to set the user or group that the program will be run as regardless of the user who executes the program.
 More history on it can be found [here](http://www.thegeekstuff.com/2013/02/sticky-bit/). 
