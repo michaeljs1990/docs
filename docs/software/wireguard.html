@@ -87,7 +87,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../networking/index.html">Networking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ruby/index.html">Ruby</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Random Software</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">WireGuard</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">WireGuard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#server-setup">Server Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#client-setup">Client Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-operations">Common Operations</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="mooltipass.html">Mooltipass</a></li>
 </ul>
 </li>
@@ -159,6 +165,103 @@
             
   <div class="section" id="wireguard">
 <span id="wireguard"></span><h1>WireGuard<a class="headerlink" href="#wireguard" title="Permalink to this headline">¶</a></h1>
+<p>WireGuard is an awesome new in kernel based VPN. To learn more about is checkout out
+the (website)<a class="reference external" href="https://www.wireguard.com/quickstart">1</a> which has good information to get you started.</p>
+<p>Here I am just going to go over a basic setup that will tunnel traffic from a server
+at my house (which I will refer to as the client) to a server run by some cloud provider
+(which I will refer to as the server).</p>
+<div class="section" id="install">
+<span id="install"></span><h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<p>First you will need to install WireGuard on your OS. They have a good list here that
+should include how to install WireGuard for most common OS https://www.wireguard.com/install/.</p>
+</div>
+<div class="section" id="server-setup">
+<span id="server-setup"></span><h2>Server Setup<a class="headerlink" href="#server-setup" title="Permalink to this headline">¶</a></h2>
+<p>First me need to create the keys that will be used to communiate with our WireGuard install.
+You can generate your keys using the <code class="docutils literal notranslate"><span class="pre">wg</span></code> command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg</span> <span class="n">genkey</span> <span class="o">&gt;</span> <span class="n">private_key</span>
+<span class="n">cat</span> <span class="n">private_key</span> <span class="o">|</span> <span class="n">wg</span> <span class="n">pubkey</span> <span class="o">&gt;</span> <span class="n">pub_key</span>
+</pre></div>
+</div>
+<p>Next we will create a config file that is used to configure our new wg0 interface that all
+out traffic will pass through. This can also be done with <code class="docutils literal notranslate"><span class="pre">ip</span></code> and <code class="docutils literal notranslate"><span class="pre">wg</span></code> commands but I won’t
+conver that here.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Interface</span><span class="p">]</span>
+<span class="n">Address</span> <span class="o">=</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">22.1</span>
+<span class="n">SaveConfig</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">PrivateKey</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">server_private_key</span><span class="o">&gt;</span>
+<span class="n">ListenPort</span> <span class="o">=</span> <span class="mi">51820</span>
+
+<span class="p">[</span><span class="n">Peer</span><span class="p">]</span>
+<span class="n">PublicKey</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">client_public_key</span><span class="o">&gt;</span>
+<span class="n">AllowedIPs</span> <span class="o">=</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">22.0</span><span class="o">/</span><span class="mi">24</span>
+</pre></div>
+</div>
+<p>To test out this config run  <code class="docutils literal notranslate"><span class="pre">wg-quick</span> <span class="pre">up</span> <span class="pre">wg0</span></code> and watch the output.</p>
+<p>To break down what is going on we are creating an interface and giving it an IP of 172.22.22.1
+giving it the private key that clients will need the public key of and setting a specific Port
+for listening on. You can read about all the options available (here)<a class="reference external" href="https://git.zx2c4.com/WireGuard/about/src/tools/man/wg-quick.8">2</a>.</p>
+<p>The Peer section is setting what clients are allowed to connect to us. If you don’t care where
+the connections come from you can set AllowedIPs to 0.0.0.0/0.</p>
+<p>Now that the servers can talk to each other you may want to do some additional setup so that you
+can route additional traffic through this server and use it as a VPN.</p>
+<p>First we enable IP forwarding If you want to make it persist reboots you need to modify <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code>
+and add the following line <code class="docutils literal notranslate"><span class="pre">net.ipv4.ip_forward=1</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ip_forward</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="client-setup">
+<span id="client-setup"></span><h2>Client Setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h2>
+<p>We will need to first generate a public key and private key for our client. This is something
+you will need to do a lot since all clients and servers need to do this step.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg</span> <span class="n">genkey</span> <span class="o">&gt;</span> <span class="n">private_key</span>
+<span class="n">cat</span> <span class="n">private_key</span> <span class="o">|</span> <span class="n">wg</span> <span class="n">pubkey</span> <span class="o">&gt;</span> <span class="n">pub_key</span>
+</pre></div>
+</div>
+<p>Next we create the client configuration file. Some of this information you can leave blank
+and fill in after the server is setup. One thing to note that AllowedIPs when using the
+<code class="docutils literal notranslate"><span class="pre">wg-quick</span></code> command will use that CIDR to add a route to your table. This means that if you
+are connecting to a remote server and forward everything to 0.0.0.0/0 you may have a bad
+day. It could be what you want but i’ll leave that up to you.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Interface</span><span class="p">]</span>
+<span class="n">Address</span> <span class="o">=</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">22.2</span>
+<span class="n">PrivateKey</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">client_private_key</span><span class="o">&gt;</span>
+
+<span class="p">[</span><span class="n">Peer</span><span class="p">]</span>
+<span class="n">PublicKey</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">server_public_key</span><span class="o">&gt;</span>
+<span class="n">Endpoint</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">server_ip</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">51820</span>
+<span class="n">AllowedIPs</span> <span class="o">=</span> <span class="mf">172.22</span><span class="o">.</span><span class="mf">22.0</span><span class="o">/</span><span class="mi">24</span>
+<span class="n">PersistentKeepalive</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>To test out this config run  <code class="docutils literal notranslate"><span class="pre">wg-quick</span> <span class="pre">up</span> <span class="pre">wg0</span></code> and watch the output.</p>
+<p>To make sense of this we need to look at the server setup. We are saying use the address of
+172.22.22.2 because we need an IP in the 172.22.22.0/24 range and 172.22.22.1 is taken by the
+server config. Additionally we pull the port from the server config as well and the IP just
+needs to be a publicly reachable IP or any IP reachable to your server if you are doing this
+on an internal network. PersistentKeepalive works nice when you have a client that is behind
+a firewall but want the connection to remain open even if the client hasn’t sent us anything
+in a while.</p>
+<p>To test that everything works you can <code class="docutils literal notranslate"><span class="pre">ping</span> <span class="pre">172.22.22.1</span></code> and then on the server run <code class="docutils literal notranslate"><span class="pre">wg</span></code> you
+should see something like “latest handshake” that happened in the past few seconds. If you see
+that you are able to talk with the server.</p>
+</div>
+<div class="section" id="common-operations">
+<span id="common-operations"></span><h2>Common Operations<a class="headerlink" href="#common-operations" title="Permalink to this headline">¶</a></h2>
+<p>Removing a peer:</p>
+<p>If you have a peer that you would like to remove you can run the following command. You can find
+the public key needed for this command by running <code class="docutils literal notranslate"><span class="pre">wg</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wg</span> <span class="nb">set</span> <span class="n">wg0</span> <span class="n">peer</span> <span class="o">&lt;</span><span class="n">public_key</span><span class="o">&gt;</span> <span class="n">remove</span>
+</pre></div>
+</div>
+<p>Remove Interface:</p>
+<p>This is just the same as any other interface so you can remove it using the following.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">link</span> <span class="nb">set</span> <span class="n">wg0</span> <span class="n">down</span>
+<span class="n">ip</span> <span class="n">link</span> <span class="n">delete</span> <span class="n">wg0</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
