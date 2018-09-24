@@ -9,5 +9,6 @@ Random Software
 .. toctree::
    :maxdepth: 1
 
+   m3db
    wireguard
    mooltipass
