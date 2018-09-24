@@ -5,7 +5,7 @@ HTTP API. You can write to it with a simple CURL command using JSON or hookup Pr
 it. This will take a look at a general M3DB setup that allows you to hook up prometheus to it
 when your storage backend sits on a different server than Prometheus.
 
-This was derived from two posts on the m3db github site that you can read (here)[1] and (here)[2].
+This was derived from two posts on the m3db github site that you can read [here][1] and [here][2].
 
 ## Setting up M3DB storage backend and ETCD
 
@@ -17,7 +17,7 @@ on since in this setup we are running them side by side.
 Another thing to note is that the software with it's default config needs at least 4GB to run even
 at a very small scale which in my case is just scraping a few hundred metrics.
 
-OK now to actually get started you will want to pull down the storage node config from (here)[3] and change
+OK now to actually get started you will want to pull down the storage node config from [here][3] and change
 a few things.
 
 ```
@@ -112,7 +112,7 @@ curl -X POST localhost:7201/api/v1/namespace -d '{
 ```
 
 After running this you you can tail the logs and you should see everything running smoothly. For a much more indepth
-version of the above look at this (post)[1] which I highly recommend.
+version of the above look at this [post][1] which I highly recommend.
 
 ## Setup the M3 Coordinator
 

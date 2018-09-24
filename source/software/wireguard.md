@@ -1,7 +1,7 @@
 # WireGuard
 
 WireGuard is an awesome new in kernel based VPN. To learn more about is checkout out
-the (website)[1] which has good information to get you started.
+the [website][1] which has good information to get you started.
 
 Here I am just going to go over a basic setup that will tunnel traffic from a server
 at my house (which I will refer to as the client) to a server run by some cloud provider
@@ -42,7 +42,7 @@ To test out this config run  `wg-quick up wg0` and watch the output.
 
 To break down what is going on we are creating an interface and giving it an IP of 172.22.22.1
 giving it the private key that clients will need the public key of and setting a specific Port
-for listening on. You can read about all the options available (here)[2].
+for listening on. You can read about all the options available [here][2].
 
 The Peer section is setting what clients are allowed to connect to us. If you don't care where
 the connections come from you can set AllowedIPs to 0.0.0.0/0.

@@ -170,7 +170,7 @@
 HTTP API. You can write to it with a simple CURL command using JSON or hookup Prometheus to
 it. This will take a look at a general M3DB setup that allows you to hook up prometheus to it
 when your storage backend sits on a different server than Prometheus.</p>
-<p>This was derived from two posts on the m3db github site that you can read (here)<a class="reference external" href="https://m3db.github.io/m3/how_to/cluster_hard_way/">1</a> and (here)<a class="reference external" href="https://m3db.github.io/m3/integrations/prometheus/">2</a>.</p>
+<p>This was derived from two posts on the m3db github site that you can read <a class="reference external" href="https://m3db.github.io/m3/how_to/cluster_hard_way/">here</a> and <a class="reference external" href="https://m3db.github.io/m3/integrations/prometheus/">here</a>.</p>
 <div class="section" id="setting-up-m3db-storage-backend-and-etcd">
 <span id="setting-up-m3db-storage-backend-and-etcd"></span><h2>Setting up M3DB storage backend and ETCD<a class="headerlink" href="#setting-up-m3db-storage-backend-and-etcd" title="Permalink to this headline">¶</a></h2>
 <p>First we will create what the M3DB documentation calls a “Seed Node”. A seed node is a superset of
@@ -179,7 +179,7 @@ track of all storage nodes in your cluster. In this case ETCD will keep track of
 on since in this setup we are running them side by side.</p>
 <p>Another thing to note is that the software with it’s default config needs at least 4GB to run even
 at a very small scale which in my case is just scraping a few hundred metrics.</p>
-<p>OK now to actually get started you will want to pull down the storage node config from (here)<a class="reference external" href="https://github.com/m3db/m3/blob/master/src/dbnode/config/m3dbnode-cluster-template.yml">3</a> and change
+<p>OK now to actually get started you will want to pull down the storage node config from <a class="reference external" href="https://github.com/m3db/m3/blob/master/src/dbnode/config/m3dbnode-cluster-template.yml">here</a> and change
 a few things.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">config</span><span class="p">:</span>
     <span class="n">service</span><span class="p">:</span>
@@ -266,7 +266,7 @@ change out the id and hostname where it says admin for the hostID of your instan
 </pre></div>
 </div>
 <p>After running this you you can tail the logs and you should see everything running smoothly. For a much more indepth
-version of the above look at this (post)<a class="reference external" href="https://m3db.github.io/m3/how_to/cluster_hard_way/">1</a> which I highly recommend.</p>
+version of the above look at this <a class="reference external" href="https://m3db.github.io/m3/how_to/cluster_hard_way/">post</a> which I highly recommend.</p>
 </div>
 <div class="section" id="setup-the-m3-coordinator">
 <span id="setup-the-m3-coordinator"></span><h2>Setup the M3 Coordinator<a class="headerlink" href="#setup-the-m3-coordinator" title="Permalink to this headline">¶</a></h2>
