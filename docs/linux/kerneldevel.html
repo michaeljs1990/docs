@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Kernel Development &mdash; Bookmarks rc documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Networking" href="../networking/index.html" />
+    <link rel="prev" title="SUID/GUID Tutorial" href="stickybits.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Bookmarks
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="stickybits.html">SUID/GUID Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kernel Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-kernel">Building the kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-qemu-debian">Setting up QEMU (Debian)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-qemu-debian-quick">Setting up QEMU (Debian Quick)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-your-kernel">Testing Your Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-networking">Setup networking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-an-initramfs-dracut">Building an initramfs (dracut)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../networking/index.html">Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ruby/index.html">Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Random Software</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Bookmarks</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Linux</a> &raquo;</li>
+        
+      <li>Kernel Development</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linux/kerneldevel.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kernel-development">
+<span id="kernel-development"></span><h1>Kernel Development<a class="headerlink" href="#kernel-development" title="Permalink to this headline">¶</a></h1>
+<p>This walks through a workflow for getting you up, running, and quickly iterating on kernel development.
+In this guide I walk through how to use QEMU and build your own custom kernel for testing. As well as setting
+up the OS that you will use for testing your kernel.</p>
+<div class="section" id="building-the-kernel">
+<span id="building-the-kernel"></span><h2>Building the kernel<a class="headerlink" href="#building-the-kernel" title="Permalink to this headline">¶</a></h2>
+<p>Before we get started we will want to build a fresh version of the kernel. I am just going to be building master
+but you can always check out whatever tag or branch you wish to work on. As of writing the kernel version is 4.19-r6.</p>
+<p>First you will want to clone the kernel. I found that github was very slow and that the official kernel github repo
+was much faster. The UI for this can be found at https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">scm</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">torvalds</span><span class="o">/</span><span class="n">linux</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>Now that we have the kernel we will want to setup our <code class="docutils literal notranslate"><span class="pre">.config</span></code> file. You can get some nice same defaults by running
+the following commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">x86_64_defconfig</span>
+<span class="n">make</span> <span class="n">kvmconfig</span>
+</pre></div>
+</div>
+<p>This will set you up with a nice sane default <code class="docutils literal notranslate"><span class="pre">.config</span></code> file additionally you might want to change the value of
+<code class="docutils literal notranslate"><span class="pre">CONFIG_LOCALVERSION</span></code> to your name so that when you run <code class="docutils literal notranslate"><span class="pre">uname</span> <span class="pre">-a</span></code> on your test machine you can clearly see that
+it’s a kernel you built.</p>
+<p>Now that we have everything configured as you like you will want to build the kernel. You can do so by running
+<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">-j8</span></code> where 8 for me is the number of cores on my computer. Additionally if you won’t want to build all the
+modules you can simply run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">bzImage</span></code> which will just produce the kernel.</p>
+<p>Careful not to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> as you likely don’t want to be installing this on your laptop. A bad configuration
+will cause your system to be unable to boot.</p>
+</div>
+<div class="section" id="setting-up-qemu-debian">
+<span id="setting-up-qemu-debian"></span><h2>Setting up QEMU (Debian)<a class="headerlink" href="#setting-up-qemu-debian" title="Permalink to this headline">¶</a></h2>
+<p>You can do this a few different ways some more automated than others. I chose to do a manual install so I could have
+a nice sane base environment for testing in but i’ll go over a quick install a little farther down.</p>
+<p>To start you will need to make a QEMU image. For this I used a qcow2 image that way I could layer changes on top of it
+making it easy to throw away changes I make in an environment during testing.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">qcow2</span> <span class="n">debian</span><span class="o">.</span><span class="n">qcow</span> <span class="mi">2</span><span class="n">G</span>
+</pre></div>
+</div>
+<p>This will set you up with a raw image that you can then begin to install your OS on. For debian you can pull the needed
+OS from <a class="reference external" href="http://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/i386/iso-cd/">here</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">cdimage</span><span class="o">.</span><span class="n">debian</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">cdimage</span><span class="o">/</span><span class="n">daily</span><span class="o">-</span><span class="n">builds</span><span class="o">/</span><span class="n">daily</span><span class="o">/</span><span class="n">arch</span><span class="o">-</span><span class="n">latest</span><span class="o">/</span><span class="n">i386</span><span class="o">/</span><span class="n">iso</span><span class="o">-</span><span class="n">cd</span><span class="o">/</span><span class="n">debian</span><span class="o">-</span><span class="n">testing</span><span class="o">-</span><span class="n">i386</span><span class="o">-</span><span class="n">netinst</span><span class="o">.</span><span class="n">iso</span>
+</pre></div>
+</div>
+<p>After you have this pulled down and your image created you can run the following to kick off the process.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">-</span><span class="n">hda</span> <span class="n">debian</span><span class="o">.</span><span class="n">qcow</span> <span class="o">-</span><span class="n">cdrom</span> <span class="n">debian</span><span class="o">-</span><span class="n">testing</span><span class="o">-</span><span class="n">i386</span><span class="o">-</span><span class="n">netinst</span><span class="o">.</span><span class="n">iso</span> <span class="o">-</span><span class="n">boot</span> <span class="n">d</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">smp</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>To break this down <code class="docutils literal notranslate"><span class="pre">hda</span></code> is just telling the qemu file to use as a hard disk in this case the qcow2 image we created above.
+<code class="docutils literal notranslate"><span class="pre">cdrom</span></code> sets the disk we want to use, <code class="docutils literal notranslate"><span class="pre">boot</span> <span class="pre">d</span></code> says boot right away and use the first cdrom we find. <code class="docutils literal notranslate"><span class="pre">-m</span></code> passes the amount
+of memory in MB and <code class="docutils literal notranslate"><span class="pre">spm</span></code> is the number of cores to give to the machine. You may want to do more to speed the process up.</p>
+<p>After qemu starts select expert install and do what you want. By default if you use the build in partitioning it will try to give
+1G of your 2G disk away for swap. I would recommend manually setting up the partition and not using swap at all or significantly
+reducing the amount you use.</p>
+<p>After you have your system configured the way you want you can create another layer ontop of your qcow2 image. That means you can use
+the base OS you made over and over and any changes will be written to another layer you can toss if you happen to mess it up.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">qcow2</span> <span class="o">-</span><span class="n">o</span> <span class="n">backing_file</span><span class="o">=</span><span class="n">debian</span><span class="o">.</span><span class="n">qcow</span> <span class="n">test</span><span class="o">.</span><span class="n">qcow</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-up-qemu-debian-quick">
+<span id="setting-up-qemu-debian-quick"></span><h2>Setting up QEMU (Debian Quick)<a class="headerlink" href="#setting-up-qemu-debian-quick" title="Permalink to this headline">¶</a></h2>
+<p>If you want something very quick you can do this as well to setup debian.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>IMG=qemu-image.img
+DIR=mount-point.dir
+qemu-img create $IMG 1g
+sudo mkfs.ext2 $IMG
+mkdir $DIR
+sudo mount -o loop $IMG $DIR
+sudo debootstrap --arch amd64 jessie $DIR
+sudo umount $DIR
+rmdir $DIR
+</pre></div>
+</div>
+<p>This will give you a small debian install that you can use. However you do not get the niceness of image layering that you would in the
+longer setup.</p>
+<p>To test this out you can run <code class="docutils literal notranslate"><span class="pre">qemu-system-x86_64</span> <span class="pre">-hda</span> <span class="pre">qemu-image.img</span></code>. This method is largely coppied from <a class="reference external" href="https://www.collabora.com/news-and-blog/blog/2017/01/16/setting-up-qemu-kvm-for-kernel-development/">here</a> which is another QEMU
+kernel dev post. But I hope to provide you a little more depth here.</p>
+</div>
+<div class="section" id="testing-your-kernel">
+<span id="testing-your-kernel"></span><h2>Testing Your Kernel<a class="headerlink" href="#testing-your-kernel" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have an image and a kernel that is built lets try things out. We are going to go the very simple route of booting with no initramfs
+to start with just to make sure things are working.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> \
+  <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span> \
+  <span class="o">-</span><span class="n">kernel</span> <span class="o">../</span><span class="n">linux</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">bzImage</span> \
+  <span class="o">-</span><span class="n">append</span> <span class="s2">&quot;console=ttyS0 root=/dev/vda1 ro&quot;</span> \
+  <span class="o">-</span><span class="n">nographic</span> \
+  <span class="o">-</span><span class="n">m</span> <span class="mi">2048</span> \
+  <span class="o">-</span><span class="n">smp</span> <span class="mi">4</span> \
+  <span class="o">-</span><span class="n">cpu</span> <span class="n">Haswell</span> \
+  <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">kvm</span>
+</pre></div>
+</div>
+<p>Some things to note is that because qcow2 is not a natively supported format the kernel knows about we can’t just pass it in with an <code class="docutils literal notranslate"><span class="pre">-hda</span></code> flag.
+Doing so in this case will just end up with the kernel telling you it seens no drives at all. In this case we tell it to use the <code class="docutils literal notranslate"><span class="pre">test.qcow2</span></code> file
+and the virtio driver which you can read more about <a class="reference external" href="https://wiki.libvirt.org/page/Virtio">here</a>. Kernel is as it sounds the bzImage you produced from building your kernel. <code class="docutils literal notranslate"><span class="pre">append</span></code>
+allows us to pass in all kinda of kernel params in this case I tell the kernel to output to the ttyS0 console and use the root device /dev/vda1.
+ttyS0 is needed because i passed in nographic so that I can quickly test in a terminal without spawning a new window for the VM. <code class="docutils literal notranslate"><span class="pre">/dev/vda1</span></code> is used
+because this is the name of the device when virtualized by virtio.</p>
+<p>If this is your first time looking through qemu I highly encourage you to pull up the man page for the parts that aren’t clear here and take a look.
+They do a fairly good job of explaining all the flags and this is only touching the surface of what you can do with qemu.</p>
+</div>
+<div class="section" id="setup-networking">
+<span id="setup-networking"></span><h2>Setup networking<a class="headerlink" href="#setup-networking" title="Permalink to this headline">¶</a></h2>
+<p>You can go about this several ways and this is mostly just here for myself but this was been the best way I have found so far to be able to interact
+with my Guest VM from the host machine.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>IFACE=wlp2s0
+modprobe tun
+
+ip tuntap add dev tap0 mode tap group kvm
+ip link set dev tap0 up promisc on
+ip addr add 0.0.0.0 dev tap0
+ip link add br0 type bridge
+ip link set br0 up
+ip link set tap0 master br0
+echo 0 &gt; /sys/class/net/br0/bridge/stp_state
+ip addr add 10.0.100.1/24 dev br0
+sysctl net.ipv4.conf.tap0.proxy_arp=1
+sysctl net.ipv4.conf.$IFACE.proxy_arp=1
+sysctl net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
+iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i br0 -o $IFACE -j ACCEPT
+</pre></div>
+</div>
+<p>This will setup two interface that you can then use to attach to your VMs when you start them up. You can do so with the addition of the following
+to your qemu command <code class="docutils literal notranslate"><span class="pre">-nic</span> <span class="pre">tap,ifname=tap0,script=no,downscript=no</span></code>. If you use the same CIDR block that I do you would then have to manually set
+your VM to use an IP in the 10.0.100.1/24 subnet. More on how this all work can be seen <a class="reference external" href="https://wiki.gentoo.org/wiki/QEMU#Networking">here</a> and how to configure you interface can be seen
+<a class="reference external" href="https://wiki.debian.org/NetworkConfiguration">here</a> depending on your OS. Additionally more about the <code class="docutils literal notranslate"><span class="pre">-nic</span></code> flag can be read <a class="reference external" href="https://www.qemu.org/2018/05/31/nic-parameter/">here</a>.</p>
+</div>
+<div class="section" id="building-an-initramfs-dracut">
+<span id="building-an-initramfs-dracut"></span><h2>Building an initramfs (dracut)<a class="headerlink" href="#building-an-initramfs-dracut" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have a simple working kernel lets see how we can build an initramfs which could be desired if you wanted to encrypt your drive for instance.</p>
+<p>To start with we will need to produce all modules and install them to a new location being careful not to install them onto our actual system. The following
+will take the modules we built above and install them to a folder I created called modules.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">modules_install</span> <span class="n">INSTALL_MOD_PATH</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">eatingthenight</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">kernel</span><span class="o">-</span><span class="n">devel</span><span class="o">/</span><span class="n">modules</span>
+</pre></div>
+</div>
+<p>Now that you have your modules installed you can use <code class="docutils literal notranslate"><span class="pre">dracut</span></code> to produce an initramfs image for you. You may need to alter the path slightly if you are
+running a different version of the kernel.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dracut</span> \
+  <span class="o">--</span><span class="n">kmoddir</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">eatingthenight</span><span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">kernel</span><span class="o">-</span><span class="n">devel</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">4.19</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">rc6</span><span class="o">+/</span> \
+  <span class="n">initramfs</span>
+</pre></div>
+</div>
+<p>Now you can start your new OS up with the following commands. Note that I pass in rdinit here which likely isnt needed for most installs but you can
+read more about it <a class="reference external" href="https://unix.stackexchange.com/questions/30414/what-can-make-passing-init-path-to-program-to-the-kernel-not-start-program-as-i">here</a> if you get strange errors during boot about <code class="docutils literal notranslate"><span class="pre">/init</span></code> not existing.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> \
+  <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span> \
+  <span class="o">-</span><span class="n">kernel</span> <span class="o">../</span><span class="n">linux</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">bzImage</span> \
+  <span class="o">-</span><span class="n">initrd</span> <span class="o">../</span><span class="n">linux</span><span class="o">/</span><span class="n">initramfs</span> \
+  <span class="o">-</span><span class="n">append</span> <span class="s2">&quot;rdinit=/sbin/init root=/dev/vda1 ro console=ttyS0&quot;</span> \
+  <span class="o">-</span><span class="n">nographic</span> \
+  <span class="o">-</span><span class="n">m</span> <span class="mi">2048</span> \
+  <span class="o">-</span><span class="n">cpu</span> <span class="n">Haswell</span> \
+  <span class="o">-</span><span class="n">smp</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>You will see the following line or one very similar fly by which confirms that you are using an initramfs now when booting.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>    <span class="mf">0.373010</span><span class="p">]</span> <span class="n">Unpacking</span> <span class="n">initramfs</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>Additionally here is some other helpful sources I found when debugging my initramfs.</p>
+<ol class="simple">
+<li>If your initramfs is failing early on try reading though <a class="reference external" href="https://wiki.debian.org/InitramfsDebug">here</a> or <a class="reference external" href="https://www.askapache.com/linux/linux-debugging/">here</a>.</li>
+<li>If you want to take a look at what is all installed in your initramfs try using <a class="reference external" href="http://manpages.ubuntu.com/manpages/xenial/man8/lsinitramfs.8.html">this program</a>.</li>
+<li>For dracut specific debugging steps check <a class="reference external" href="https://fedoraproject.org/wiki/How_to_debug_Dracut_problems">here</a>.</li>
+<li>Look around in your initramfs with <code class="docutils literal notranslate"><span class="pre">gunzip</span> <span class="pre">-c</span> <span class="pre">initramfs</span> <span class="pre">|</span> <span class="pre">cpio</span> <span class="pre">-cvit</span></code> this will extract it to disk.</li>
+<li>Pass <code class="docutils literal notranslate"><span class="pre">rdinit=/bin/bash</span></code> to the kernel during boot to drop to a shell inside your initramfs.</li>
+<li>If you run into any very cryptic errors such as something like <code class="docutils literal notranslate"><span class="pre">trap</span> <span class="pre">invalid</span> <span class="pre">opcode</span></code> you likely need to use a different
+CPU arch. I used Haswell to get around this error however if you have a different chip set you may need to change it.</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../networking/index.html" class="btn btn-neutral float-right" title="Networking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="stickybits.html" class="btn btn-neutral" title="SUID/GUID Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Michael Schuett.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'rc',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
