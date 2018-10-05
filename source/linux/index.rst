@@ -10,4 +10,5 @@ Linux
    :maxdepth: 1
 
    stickybits
+   kerneldevel
 
