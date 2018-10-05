@@ -182,7 +182,7 @@ sudo qemu-system-x86_64 \
   -drive file=test.qcow2,if=virtio \
   -kernel ../linux/arch/x86/boot/bzImage \
   -initrd ../linux/initramfs \
-  -append "rdinit=/sbin/init root=/dev/vda1 ro console=ttyS0" \
+  -append "root=/dev/vda1 ro console=ttyS0" \
   -nographic \
   -m 2048 \
   -cpu Haswell \
@@ -204,6 +204,9 @@ Additionally here is some other helpful sources I found when debugging my initra
 5. Pass `rdinit=/bin/bash` to the kernel during boot to drop to a shell inside your initramfs.
 6. If you run into any very cryptic errors such as something like `trap invalid opcode` you likely need to use a different
 CPU arch. I used Haswell to get around this error however if you have a different chip set you may need to change it.
+7. IMPORTANT: if you set rdinit to anything outside of `/init` all of the `rd.*` commands from `man dracut.cmdline` will no
+longer work since that init script looks for them. For instance if you switch your rdinit to `/sbin/init` it will happily 
+ignore all of your rd commands.
 
 
 [1]: http://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/i386/iso-cd/
