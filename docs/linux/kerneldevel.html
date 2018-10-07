@@ -336,9 +336,9 @@ read more about it <a class="reference external" href="https://unix.stackexchang
 <li>Pass <code class="docutils literal notranslate"><span class="pre">rdinit=/bin/bash</span></code> to the kernel during boot to drop to a shell inside your initramfs.</li>
 <li>If you run into any very cryptic errors such as something like <code class="docutils literal notranslate"><span class="pre">trap</span> <span class="pre">invalid</span> <span class="pre">opcode</span></code> you likely need to use a different
 CPU arch. I used Haswell to get around this error however if you have a different chip set you may need to change it.</li>
-<li>IMPORTANT: if you set rdinit to anything outside of <code class="docutils literal notranslate"><span class="pre">/init</span></code> all of the <code class="docutils literal notranslate"><span class="pre">rd.*</span></code> commands from <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">dracut.cmdline</span></code> will no
-longer work since that init script looks for them. For instance if you switch your rdinit to <code class="docutils literal notranslate"><span class="pre">/sbin/init</span></code> it will happily
-ignore all of your rd commands.</li>
+<li>IMPORTANT: if you set the kernel param <code class="docutils literal notranslate"><span class="pre">rdinit</span></code> to anything outside of <code class="docutils literal notranslate"><span class="pre">/init</span></code> all of the <code class="docutils literal notranslate"><span class="pre">rd.*</span></code> commands from
+<code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">dracut.cmdline</span></code> will no longer work since that init script looks for them. For instance if you switch your
+rdinit to <code class="docutils literal notranslate"><span class="pre">/sbin/init</span></code> it will happily ignore all of your rd commands.</li>
 </ol>
 </div>
 </div>
