@@ -310,8 +310,7 @@ running a different version of the kernel.</p>
   <span class="n">initramfs</span>
 </pre></div>
 </div>
-<p>Now you can start your new OS up with the following commands. Note that I pass in rdinit here which likely isnt needed for most installs but you can
-read more about it <a class="reference external" href="https://unix.stackexchange.com/questions/30414/what-can-make-passing-init-path-to-program-to-the-kernel-not-start-program-as-i">here</a> if you get strange errors during boot about <code class="docutils literal notranslate"><span class="pre">/init</span></code> not existing.</p>
+<p>Now you can start your new OS up with the following commands.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> \
   <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">virtio</span> \
   <span class="o">-</span><span class="n">kernel</span> <span class="o">../</span><span class="n">linux</span><span class="o">/</span><span class="n">arch</span><span class="o">/</span><span class="n">x86</span><span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">bzImage</span> \
@@ -338,7 +337,7 @@ read more about it <a class="reference external" href="https://unix.stackexchang
 CPU arch. I used Haswell to get around this error however if you have a different chip set you may need to change it.</li>
 <li>IMPORTANT: if you set the kernel param <code class="docutils literal notranslate"><span class="pre">rdinit</span></code> to anything outside of <code class="docutils literal notranslate"><span class="pre">/init</span></code> all of the <code class="docutils literal notranslate"><span class="pre">rd.*</span></code> commands from
 <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">dracut.cmdline</span></code> will no longer work since that init script looks for them. For instance if you switch your
-rdinit to <code class="docutils literal notranslate"><span class="pre">/sbin/init</span></code> it will happily ignore all of your rd commands.</li>
+rdinit to <code class="docutils literal notranslate"><span class="pre">/sbin/init</span></code> it will happily ignore all of your rd commands. More can be seen <a class="reference external" href="https://unix.stackexchange.com/questions/30414/what-can-make-passing-init-path-to-program-to-the-kernel-not-start-program-as-i">here</a></li>
 </ol>
 </div>
 </div>

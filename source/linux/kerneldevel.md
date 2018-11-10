@@ -174,8 +174,7 @@ sudo dracut \
   initramfs
 ```
 
-Now you can start your new OS up with the following commands. Note that I pass in rdinit here which likely isnt needed for most installs but you can
-read more about it [here][9] if you get strange errors during boot about `/init` not existing.
+Now you can start your new OS up with the following commands.
 
 ```
 sudo qemu-system-x86_64 \
@@ -206,7 +205,7 @@ Additionally here is some other helpful sources I found when debugging my initra
 CPU arch. I used Haswell to get around this error however if you have a different chip set you may need to change it.
 7. IMPORTANT: if you set the kernel param `rdinit` to anything outside of `/init` all of the `rd.*` commands from 
 `man dracut.cmdline` will no longer work since that init script looks for them. For instance if you switch your 
-rdinit to `/sbin/init` it will happily ignore all of your rd commands.
+rdinit to `/sbin/init` it will happily ignore all of your rd commands. More can be seen [here][9]
 
 
 [1]: http://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/i386/iso-cd/
@@ -220,5 +219,7 @@ rdinit to `/sbin/init` it will happily ignore all of your rd commands.
 [9]: https://unix.stackexchange.com/questions/30414/what-can-make-passing-init-path-to-program-to-the-kernel-not-start-program-as-i
 [10]: http://manpages.ubuntu.com/manpages/xenial/man8/lsinitramfs.8.html
 [11]: https://fedoraproject.org/wiki/How_to_debug_Dracut_problems
+
 [20]: https://www.youtube.com/watch?v=PBY9l97-lto
 [21]: https://www.kernel.org/doc/html/v4.14/admin-guide/kernel-parameters.html
+[22]: https://www.berrange.com/posts/2018/06/29/cpu-model-configuration-for-qemu-kvm-on-x86-hosts/
