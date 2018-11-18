@@ -213,3 +213,5 @@ show env all
 ```
 
 To return information about the temp, system fan, and temp thresholds.
+
+[1]: https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swiprout.html
