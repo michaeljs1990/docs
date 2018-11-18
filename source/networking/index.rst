@@ -9,5 +9,7 @@ Networking
 .. toctree::
    :maxdepth: 1
 
+   bgp
+   juniper
    ciscocatalyst3560G
 
