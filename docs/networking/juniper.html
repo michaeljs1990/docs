@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Junos OS &mdash; Bookmarks rc documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cisco Catalyst 3560G Config" href="ciscocatalyst3560G.html" />
+    <link rel="prev" title="BGP" href="bgp.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Bookmarks
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Networking</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bgp.html">BGP</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Junos OS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enter-configuration-mode">Enter configuration mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface-naming-information">Interface naming information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#helpful-commands">Helpful commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deleting-configuration">Deleting configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-a-new-interface">Configure a new interface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ciscocatalyst3560G.html">Cisco Catalyst 3560G Config</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ruby/index.html">Ruby</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Random Software</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Bookmarks</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Networking</a> &raquo;</li>
+        
+      <li>Junos OS</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/networking/juniper.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="junos-os">
+<span id="junos-os"></span><h1>Junos OS<a class="headerlink" href="#junos-os" title="Permalink to this headline">¶</a></h1>
+<p>Basic commands for interacting with juniper networking gear.</p>
+<div class="section" id="enter-configuration-mode">
+<span id="enter-configuration-mode"></span><h2>Enter configuration mode<a class="headerlink" href="#enter-configuration-mode" title="Permalink to this headline">¶</a></h2>
+<p>To enter the cli and the configuration mode run the following two commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cli</span>
+<span class="n">configure</span>
+</pre></div>
+</div>
+<p>Once you have finished making changes you will need to run the following so that
+they actually take effect.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">commit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interface-naming-information">
+<span id="interface-naming-information"></span><h2>Interface naming information<a class="headerlink" href="#interface-naming-information" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.juniper.net/documentation/en_US/junos/topics/concept/interfaces-interface-naming-overview.html">This page</a> gives you a good overview of all the different interface names and what they mean.</p>
+</div>
+<div class="section" id="helpful-commands">
+<span id="helpful-commands"></span><h2>Helpful commands<a class="headerlink" href="#helpful-commands" title="Permalink to this headline">¶</a></h2>
+<p>If you need to change your hostname you can run the following.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter configuration mode</span>
+<span class="nb">set</span> <span class="n">system</span> <span class="n">host</span><span class="o">-</span><span class="n">name</span> <span class="n">yourhostname</span>
+</pre></div>
+</div>
+<p>Get a quick look at all the networking interfaces</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">interfaces</span> <span class="n">terse</span>
+</pre></div>
+</div>
+<p>If you are in configuration mode and want to run a command such as show interfaces you
+can do this by appending <code class="docutils literal notranslate"><span class="pre">run</span></code> to it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span> <span class="n">show</span> <span class="n">interfaces</span> <span class="n">terse</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-configuration">
+<span id="deleting-configuration"></span><h2>Deleting configuration<a class="headerlink" href="#deleting-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Deleting configurations is easy and following the following syntax.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="n">thing</span> <span class="n">to</span> <span class="n">remove</span>
+</pre></div>
+</div>
+<p>For instance if we have an interface that we no longer called ge-0/0/0 you
+would run the following command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="n">interfaces</span> <span class="n">ge</span><span class="o">-</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-a-new-interface">
+<span id="configure-a-new-interface"></span><h2>Configure a new interface<a class="headerlink" href="#configure-a-new-interface" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="n">interfaces</span> <span class="n">xe</span><span class="o">-</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span> <span class="n">unit</span> <span class="mi">0</span> <span class="n">family</span> <span class="n">inet</span> <span class="n">address</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">2.1</span><span class="o">/</span><span class="mi">24</span>
+</pre></div>
+</div>
+<p>If you run into an error about the address not being compatible with DHCP you will
+need to remove dhcp from the configuration like so.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="n">interfaces</span> <span class="n">xe</span><span class="o">-</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span> <span class="n">unit</span> <span class="mi">0</span> <span class="n">family</span> <span class="n">inet</span> <span class="n">dhcp</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ciscocatalyst3560G.html" class="btn btn-neutral float-right" title="Cisco Catalyst 3560G Config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bgp.html" class="btn btn-neutral" title="BGP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Michael Schuett.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'rc',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
