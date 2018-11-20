@@ -11,4 +11,5 @@ Linux
 
    stickybits
    kerneldevel
+   proc_stat
 
