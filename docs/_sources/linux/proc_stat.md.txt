@@ -1,4 +1,4 @@
-/proc/stat
+Whats in /proc/stat
 ===============
 
 A few people have done a deeper look into this than I will here but this is just a brief
