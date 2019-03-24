@@ -183,6 +183,12 @@ show ip bgp neighbors 10.10.12.103 routes
 show ip bgp
 ```
 
+# Random
+
+[General BGP Intro][8]
+[Getting your own ASN and IP Space][9]
+[Simple BGP tutorial][10]
+
 [1]: https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing
 [2]: https://www.quagga.net/docs/quagga.html#BGP
 [3]: https://github.com/michaeljs1990/testlabs/tree/master/anycast
@@ -190,3 +196,6 @@ show ip bgp
 [5]: https://www.noction.com/blog/equal-cost-multipath-ecmp
 [6]: http://highscalability.com/blog/2014/8/4/tumblr-hashing-your-way-to-handling-23000-blog-requests-per.html
 [7]: https://www.cisco.com/c/en/us/td/docs/security/asa/asa84/configuration/guide/asa_84_cli_config/route_maps.pdf
+[8]: http://packetfire.org/post/intro-to-bgp/
+[9]: https://labs.ripe.net/Members/samir_jafferali/build-your-own-anycast-network-in-nine-steps
+[10]: http://www.m0rd0r.eu/simple-bgp-peering-with-quagga-ex-zebra/
