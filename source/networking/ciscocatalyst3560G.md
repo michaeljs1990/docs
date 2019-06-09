@@ -204,6 +204,14 @@ If you would like to not be blasted with logging while you are typing..
 no logging console
 ```
 
+Get the IP of connected devices that are in your ARP table. This can be useful to check if a connected
+device has a static IP set that is not routable on the network.
+
+```
+sh ip arp
+```
+
+
 ## Get System Temp Info
 
 If you are looking for info on if your system is overheating you can use
