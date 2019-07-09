@@ -1,7 +1,3 @@
-# Bookmarks
-
-Bookmarks that I was working my way through or want to look through later. Also contains some random notes about stuff I should likely memorize.
-
 Index
 =====
 
@@ -18,3 +14,8 @@ In Progress
 ===========
 
 1. http://www.cl.cam.ac.uk/projects/raspberrypi/tutorials/os/ok03.html
+
+## Getting started
+
+To edit and read this wiki you can use any markdown viewer or run
+`bundle exec puma` and go to port 9292.
