@@ -21,7 +21,7 @@ import (
 func solver(prices []int) int {
   diff := prices[1] - prices[0]
   min := prices[0]
-  for _, price := range prices[1:] {
+  for _, price := range prices[2:] {
     tmpDiff := price - min
     if price > min && tmpDiff > diff {
       diff = tmpDiff

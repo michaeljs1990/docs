@@ -33,7 +33,7 @@ same time step-at least 1 minute has to pass.
 
 ### Solution
 
-The following was done in golang and the full program can be seen [here](). 
+The following was done in golang and the full program can be seen [here](code/stock_most_profit.go). 
 
  - Once you find that by keeping track of the min and diff you can move over the arry in order. This removes any need to think about the indices and greatly simplifies the problem.
  - We want to always return an answer even if it's negative so we always can calculate the diff from the first two indices of the array safely.
