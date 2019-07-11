@@ -1,3 +1,10 @@
+// Before advent of QWERTY keyboards, texts and numbers were placed on the same key. For
+// example 2 has “ABC” if we wanted to write anything starting with ‘A’ we need to type
+// key 2 once. If we wanted to type ‘B’, press key 2 twice and thrice for typing ‘C’. below
+// is picture of such keypad.
+//
+// Given a keypad as shown in diagram, and a n digit number, list all words which are
+// possible by pressing these numbers.
 package main
 
 import (

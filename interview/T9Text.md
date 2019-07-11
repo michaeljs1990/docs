@@ -31,7 +31,7 @@ The cases break down like this.
  - If the number if 2-9 append the character to the word and call function again
 
 For instance if we have "a" and the next number is 3 we now need "ad", "ae", "af".
-We then need to call solver for each of these until we reach the end. Goland doesn't
+We then need to call solver for each of these until we reach the end. Golang doesn't
 have sets so to keep the output clean I wrote a simple appender function.
 
 ```golang
