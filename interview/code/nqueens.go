@@ -20,9 +20,7 @@ func makeBoard(size int) [][]int {
 func copyBoard(board [][]int) [][]int {
   newBoard := makeBoard(len(board))
   for i := 0; i < len(board); i++ {
-    for ii, v := range board[i] {
-      newBoard[i][ii] = v
-    }
+    copy(newBoard[i], board[i])
   }
   return newBoard
 }
