@@ -90,7 +90,7 @@ func main() {
 }
 ```
 
-## Why this is a bad question
+### Why this is a bad question
 
 I can't think of many reasons this is bad however it does force you to solve it one way
 and doesn't have a lot of wiggle room for creative solutions.
