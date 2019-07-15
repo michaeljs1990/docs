@@ -101,14 +101,15 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 
 func main() {
 	room := [][]int{
-		[]int{0, 0, 1, 0},
-		[]int{0, 0, 0, 0},
-		[]int{1, 1, 0, 1},
-		[]int{0, 0, 1, 0},
+		[]int{0, 0, 1, 0, 0},
+		[]int{0, 0, 0, 0, 0},
+		[]int{1, 1, 0, 1, 0},
+		[]int{0, 0, 1, 0, 0},
+		[]int{1, 0, 0, 0, 0},
 	}
 
 	visited := map[string]bool{}
 
-	o, _ := solver(room, 12, 0, 0, visited)
+	o, _ := solver(room, 13, 0, 0, visited)
 	fmt.Println(o)
 }
