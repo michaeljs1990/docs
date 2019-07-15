@@ -24,14 +24,14 @@ func copymap(visited map[string]bool) map[string]bool {
 	return visitcopy
 }
 
-func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, bool) {
+func solver(room [][]int, charge, row, col int, visited map[string]bool) int {
 	if charge == 0 && row == 0 && col == 0 {
 		// We have found a possible winning solution
-		return len(visited), true
+		return len(visited)
 	}
 
 	if charge == 0 {
-		return 0, false
+		return 0
 	}
 
 	rets := []int{}
@@ -41,11 +41,8 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 	if (row) >= 0 && charge != 0 {
 		visitcopy := copymap(visited)
 		visitcopy[key] = true
-		i, b := solver(room, charge-1, row, col, visitcopy)
+		i := solver(room, charge-1, row, col, visitcopy)
 		rets = append(rets, i)
-		if !b {
-			delete(visitcopy, key)
-		}
 	}
 
 	// Move up
@@ -53,11 +50,8 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 	if (row-1) >= 0 && charge != 0 && room[row-1][col] != 1 {
 		visitcopy := copymap(visited)
 		visitcopy[key] = true
-		i, b := solver(room, charge-1, row-1, col, visitcopy)
+		i := solver(room, charge-1, row-1, col, visitcopy)
 		rets = append(rets, i)
-		if !b {
-			delete(visitcopy, key)
-		}
 	}
 
 	// Move down
@@ -65,11 +59,8 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 	if (row+1) < len(room) && charge != 0 && room[row+1][col] != 1 {
 		visitcopy := copymap(visited)
 		visitcopy[key] = true
-		i, b := solver(room, charge-1, row+1, col, visitcopy)
+		i := solver(room, charge-1, row+1, col, visitcopy)
 		rets = append(rets, i)
-		if !b {
-			delete(visitcopy, key)
-		}
 	}
 
 	// Move left
@@ -77,11 +68,8 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 	if (col-1) >= 0 && charge != 0 && room[row][col-1] != 1 {
 		visitcopy := copymap(visited)
 		visitcopy[key] = true
-		i, b := solver(room, charge-1, row, col-1, visitcopy)
+		i := solver(room, charge-1, row, col-1, visitcopy)
 		rets = append(rets, i)
-		if !b {
-			delete(visitcopy, key)
-		}
 	}
 
 	// Move right
@@ -89,14 +77,11 @@ func solver(room [][]int, charge, row, col int, visited map[string]bool) (int, b
 	if (col+1) < len(room[row]) && charge != 0 && room[row][col+1] != 1 {
 		visitcopy := copymap(visited)
 		visitcopy[key] = true
-		i, b := solver(room, charge-1, row, col+1, visitcopy)
+		i := solver(room, charge-1, row, col+1, visitcopy)
 		rets = append(rets, i)
-		if !b {
-			delete(visitcopy, key)
-		}
 	}
 
-	return max(rets), true
+	return max(rets)
 }
 
 func main() {
@@ -110,6 +95,6 @@ func main() {
 
 	visited := map[string]bool{}
 
-	o, _ := solver(room, 13, 0, 0, visited)
+	o := solver(room, 13, 0, 0, visited)
 	fmt.Println(o)
 }
