@@ -54,7 +54,7 @@ The easy fix if to just do a find for resolv.conf under your docker containers d
 `/var/lib/docker/containers` and copy your resolv.conf to them with something like.
 
 ```
-$ find /var/lib/docker/containers -name resolv.conf -exec cp /etc/resolv.conf {} +
+$ find /var/lib/docker/containers -name resolv.conf -exec cp /etc/resolv.conf {} \;
 ```
 
 1: https://docs.docker.com/v17.09/engine/userguide/networking/default_network/configure-dns/
