@@ -75,6 +75,5 @@ Here is an example print out of all the different things you can set on your nod
 | 47 | CONTACT                  |       -1 | Contact                  | CONTACT                                                  |          1 |
 | 48 | CONTACT_NOTES            |       -1 | Contact_notes            | CONTACT_NOTES                                            |          1 |
 | 49 | PASSWORD                 |       -1 | Password                 | password                                                 |          1 |
-| 50 | TOTAL_DISK_STORAGE       |       -1 | Total_disk_storage       | TOTAL_DISK_STORAGE                                       |          1 |
 +----+--------------------------+----------+--------------------------+----------------------------------------------------------+------------+
 ```
