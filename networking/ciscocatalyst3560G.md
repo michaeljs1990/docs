@@ -214,7 +214,7 @@ sh ip arp
 ## Why doesn't my SFP work?
 
 This is for a number of reasons. Maybe you didn't read the full spec for the hardware you bought. Maybe
-the cable is bad. Whatever the reason this might help you figure it out.
+the cable is bad. Whatever the reason is this might help you figure it out.
 
 First take a look at
 
@@ -243,8 +243,8 @@ To dive a little deeper into what is going on you can run the following command.
 show log
 ```
 
-For me this shows the following. Which which is a CRC error when validating the hardware.
-The following is from ciscos website.
+For me this shows the following. Which is a CRC error when validating the hardware.
+The following is from the cisco website.
 
 > Note: Cisco-approved Small Form-factor Pluggable (SFP) modules have a serial EEPROM that
 > contains the module serial number, the vendor name and ID, a unique security code, and CRC.
