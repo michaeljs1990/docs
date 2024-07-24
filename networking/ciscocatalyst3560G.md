@@ -211,6 +211,77 @@ device has a static IP set that is not routable on the network.
 sh ip arp
 ```
 
+## Why doesn't my SFP work?
+
+This is for a number of reasons. Maybe you didn't read the full spec for the hardware you bought. Maybe
+the cable is bad. Whatever the reason this might help you figure it out.
+
+First take a look at
+
+```
+enable
+show interfaces
+```
+
+The output might look like this or maybe you have an entirely different problem which I can't help with.
+If your output does look like this you have Gi0/51 and Gi0/52 which are not plugged in at all or the
+SFP is bad and not registering.
+
+For Gi0/49 and Gi0/50 it is showing err-disabled which means it connected and then cisco instantly disabled
+the interface and will not send anything over it.
+
+```
+Gi0/49                       err-disabled 1            auto   auto unknown
+Gi0/50                       err-disabled 1            auto   auto unknown
+Gi0/51                       notconnect   1            auto   auto Not Present
+Gi0/52                       notconnect   1            auto   auto Not Present
+```
+
+To dive a little deeper into what is going on you can run the following command.
+
+```
+show log
+```
+
+For me this shows the following. Which which is a CRC error when validating the hardware.
+The following is from ciscos website.
+
+> Note: Cisco-approved Small Form-factor Pluggable (SFP) modules have a serial EEPROM that
+> contains the module serial number, the vendor name and ID, a unique security code, and CRC.
+> When an SFP module is inserted in the switch, the switch software reads the EEPROM to verify
+> the serial number, vendor name and vendor ID, and recompute the security code and CRC. If the
+> serial number, the vendor name or vendor ID, the security code, or CRC is invalid, the software
+> generates the security error message and possibly places the interface in an error-disabled state.
+
+```
+Jul 23 19:51:36.585: %GBIC_SECURITY_CRYPT-4-VN_DATA_CRC_ERROR: GBIC in port Gi0/52 has bad crc
+Jul 23 19:51:36.585: %PM-4-ERR_DISABLE: gbic-invalid error detected on Gi0/52, putting Gi0/52 in err-disable state
+Jul 23 19:51:44.336: %GBIC_SECURITY_CRYPT-4-VN_DATA_CRC_ERROR: GBIC in port Gi0/51 has bad crc
+Jul 23 19:51:44.336: %PM-4-ERR_DISABLE: gbic-invalid error detected on Gi0/51, putting Gi0/51 in err-disable state
+Jul 23 19:59:46.466: %GBIC_SECURITY_CRYPT-4-VN_DATA_CRC_ERROR: GBIC in port Gi0/52 has bad crc
+Jul 23 20:00:12.975: %GBIC_SECURITY_CRYPT-4-VN_DATA_CRC_ERROR: GBIC in port Gi0/50 has bad crc
+Jul 23 20:00:35.440: %GBIC_SECURITY_CRYPT-4-VN_DATA_CRC_ERROR: GBIC in port Gi0/51 has bad crc
+```
+
+To remedy the error cisco recommends the following.
+
+> In order to resolve this, verify that the software release that runs on the system supports the
+> GBIC module. If the GBIC module is newer, a system software upgrade is possibly required.
+
+Looking at the spec sheet for my hardware I can see that it only support a SFP (1GBi) and not a 
+SFP+ (10GBi). So it's likely I need to buy a much older SFP cable that is supported by this catalyst.
+However because it's only a SFP that supports 1GBi it's not even worth it since ethernet supports
+the same thing. I'll likely upgrade from this system that was originally released in `10-FEB-2004`
+but for now this 20 year old hardware works pretty well.
+
+## What kind of system do I have
+
+If you aren't sure what kind of hardware you are running on you can run the following command to get an
+identifier.
+
+```
+show inventory
+```
 
 ## Get System Temp Info
 
