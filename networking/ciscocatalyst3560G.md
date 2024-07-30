@@ -293,4 +293,12 @@ show env all
 
 To return information about the temp, system fan, and temp thresholds.
 
+## How to SSH in
+
+Since this thing is so old when trying to ssh into it on mac you need to use the following commands.
+
+```
+ssh -oKexAlgorithms=+diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-rsa -c aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc <user>@<ip>
+```
+
 [1]: https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst3560/software/release/12-2_55_se/configuration/guide/3560_scg/swiprout.html
